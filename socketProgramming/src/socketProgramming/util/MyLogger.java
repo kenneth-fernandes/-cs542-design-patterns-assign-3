@@ -1,26 +1,39 @@
 package socketProgramming.src.socketProgramming.util;
 
-
+/**
+ * The class MyLogger is for implementing the logger
+ * @author Akshay Anvekar and Kenneth Fernandes
+ */
 public class MyLogger
 {
 
-	
+	/**
+	 * Enum for to define different log levels
+	 */
 	public static enum DebugLevel
 	{
 		CONSTRUCTOR,
 		THREAD_RUN,
-		RESULTS_ENTRY_ADDED,
-		RESULTS_CONTENT,
+		RESULTS_ADDED,
+		RESULTS,
 		NO_OUTPUT,
 		NONE
 	};
 
 	private static DebugLevel debugValue;
 
-	
-	public static void setDebugValue(int levelIn)
+	/**
+	 * Use the DEBUG_VALUE in the following way:
+	 * DEBUG_VALUE=4 [Print to stdout everytime a constructor is called]
+	 * DEBUG_VALUE=3 [Print to stdout everytime a thread's run() method is called]
+	 * DEBUG_VALUE=2 [Print to stdout everytime an entry is added to the Results data structure]
+	 * DEBUG_VALUE=1 [Print to stdout the contents of the data structure in the store Results instance]
+	 * DEBUG_VALUE=0 [No output should be printed from the application, except the line "The sume of all the prime numbers is: XYZ" ]
+	 * @param levelIn
+	 */
+	public static void setDebugValue(int level)
 	{
-		switch(levelIn)
+		switch(level)
 		{
 			case 4:
 				debugValue = DebugLevel.CONSTRUCTOR;
@@ -29,10 +42,10 @@ public class MyLogger
 				debugValue = DebugLevel.THREAD_RUN;
 				break;
 			case 2:
-				debugValue = DebugLevel.RESULTS_ENTRY_ADDED;
+				debugValue = DebugLevel.RESULTS_ADDED;
 				break;
 			case 1:
-				debugValue = DebugLevel.RESULTS_CONTENT;
+				debugValue = DebugLevel.RESULTS;
 				break;
 			case 0:
 				debugValue = DebugLevel.NO_OUTPUT;
@@ -43,29 +56,41 @@ public class MyLogger
 		}
 	}
 
-	
-	public static void setDebugValue(DebugLevel levelIn)
+	/**
+	 * This is a Function for setting the debug level on the basis of
+	 *  the Enum value passed
+	 */
+	public static void setDebugValue(DebugLevel level)
 	{
-		debugValue = levelIn;
+		debugValue = level;
 	}
 
-	
-	public static void writeMessage(String message, DebugLevel levelIn)
+	/**
+	 * This function prints the message for corresponding 
+	 *  debug value 
+	 */
+	public static void writeMessage(String Msg, DebugLevel level)
 	{
-		if (levelIn == debugValue)
-			System.out.println(message);
+		if (level == debugValue)
+			System.out.println(Msg);
 	}
-
-	public static void writeExceptionMessage(String message, DebugLevel levelIn)
+	/**
+	 * This function prints the error message for corresponding 
+	 *  debug value 
+	 */
+	public static void writeExceptionMessage(String errMsg, DebugLevel level)
 	{
-		if (levelIn == debugValue)
-			System.err.println(message);
+		if (level == debugValue)
+			System.err.println(errMsg);
 	}
 	
-	
-	public static void writeExceptionMessage(Exception e, DebugLevel levelIn)
+	/**
+	 * This function prints the error object (stack trace) for corresponding 
+	 *  debug value 
+	 */
+	public static void writeExceptionMessage(Exception e, DebugLevel level)
 	{
-		if (levelIn == debugValue)
+		if (level == debugValue)
 			e.printStackTrace();
 	}
 	
