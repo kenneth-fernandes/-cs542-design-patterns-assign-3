@@ -7,6 +7,10 @@ import java.io.IOException;
 import socketProgramming.src.socketProgramming.util.MyLogger.DebugLevel;
 
 
+/**
+ * The Class FileProcessor performs file related operations.
+ * @author Akshay Anvekar and Kenneth Fernandes
+ */
 public class FileProcessor
 {
 	private BufferedReader br = null;
@@ -24,13 +28,22 @@ public class FileProcessor
 		}
 	}
 	
-	
+	/**
+	 * A thread safe function that reads the file one line
+	 * which returns the line back to thecaller function 
+	 * @return Returns one line read from the file
+	 */
 	public synchronized String readLine() throws IOException
 	{
 		String line = null;
 		return ((line = br.readLine()) != null) ?  line.trim() : line;
 	}
 	
+
+	/**
+	 * This is a function is for closing the file
+	 * @throws IOException
+	 */
 	public void closeFile() throws IOException
 	{
 		try
