@@ -1,7 +1,7 @@
-package socketProgramming.src.socketProgramming.util;
+package socketProgramming.util;
 
 import java.io.IOException;
-import socketProgramming.src.socketProgramming.util.MyLogger.DebugLevel;
+import socketProgramming.util.MyLogger.DebugLevel;
 
 /**
  * The CreateWorkers Class contains startWorkers() method which
@@ -26,7 +26,7 @@ public class CreateWorkers
 	
 	/**
 	 * The method borrows NUM_THREADS threads i.e start them and join on them. 
-     * The instances fo FileProcessor, Results, and IsPrime should be passed to he constructor of the worker thread class.
+     	 * The instances of FileProcessor, Results, and IsPrime should be passed to he constructor of the worker thread class.
 	 * @param numOfThreads The number of threads passed as command line argument to the program
 	 * @throws InterruptedException
 	 * @throws IOException
@@ -34,8 +34,8 @@ public class CreateWorkers
 	public void startWorkers(int numOfThreads) throws InterruptedException, IOException
 	{
 		/**
-         * To Call the createThreads function with required set of parameters
-         */
+         	* To Call the createThreads function with required set of parameters
+         	*/
 		ThreadPool.createThreads(numOfThreads, fp, results, isPrime);
 		
 		/*Borrowing of the threads, one thread at a time and
@@ -76,3 +76,4 @@ public class CreateWorkers
 				+ ", isPrime=" + isPrime + ")";
 	}
 }
+

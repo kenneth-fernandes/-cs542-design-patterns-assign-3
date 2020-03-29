@@ -1,7 +1,7 @@
-package socketProgramming.src.socketProgramming.util;
+package socketProgramming.util;
 
 import java.io.IOException;
-import socketProgramming.src.socketProgramming.util.MyLogger.DebugLevel;
+import socketProgramming.util.MyLogger.DebugLevel;
 
 /**
  * WorkerThread class is for implementing the worker thread which reads
@@ -61,3 +61,4 @@ public class WorkerThread implements Runnable
 				+ isPrime + ")";
 	}
 }
+

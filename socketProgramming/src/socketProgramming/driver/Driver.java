@@ -1,14 +1,14 @@
-package socketProgramming.src.socketProgramming.driver;
+package socketProgramming.driver;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import socketProgramming.src.socketProgramming.util.CreateWorkers;
-import socketProgramming.src.socketProgramming.util.FileProcessor;
-import socketProgramming.src.socketProgramming.util.IsPrime;
-import socketProgramming.src.socketProgramming.util.MyLogger;
-import socketProgramming.src.socketProgramming.util.Results;
-import socketProgramming.src.socketProgramming.util.MyLogger.DebugLevel;
+import socketProgramming.util.CreateWorkers;
+import socketProgramming.util.FileProcessor;
+import socketProgramming.util.IsPrime;
+import socketProgramming.util.MyLogger;
+import socketProgramming.util.Results;
+import socketProgramming.util.MyLogger.DebugLevel;
 
 /**
  * @author Akshay Anvekar and Kenneth Fernandes
@@ -82,3 +82,4 @@ public class Driver
 		}
 	}
 }
+

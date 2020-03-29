@@ -1,4 +1,4 @@
-package socketProgramming.src.socketProgramming.util;
+package socketProgramming.util;
 
 /**
  * The class MyLogger is for implementing the logger
@@ -99,3 +99,4 @@ public class MyLogger
 		return "The debug value set is " + debugValue;
 	}
 }
+

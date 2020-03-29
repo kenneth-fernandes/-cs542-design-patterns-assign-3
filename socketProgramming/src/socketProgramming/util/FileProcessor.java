@@ -1,10 +1,10 @@
-package socketProgramming.src.socketProgramming.util;
+package socketProgramming.util;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import socketProgramming.src.socketProgramming.util.MyLogger.DebugLevel;
+import socketProgramming.util.MyLogger.DebugLevel;
 
 
 /**
@@ -64,3 +64,4 @@ public class FileProcessor
 		return "FileProcessor [bufferedReader=" + br + "]";
 	}
 }
+

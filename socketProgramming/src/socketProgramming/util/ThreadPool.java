@@ -1,4 +1,4 @@
-package socketProgramming.src.socketProgramming.util;
+package socketProgramming.util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,3 +84,4 @@ public class ThreadPool
 		return "Size of Thread pool is " + noThreads;
 	}
 }
+
