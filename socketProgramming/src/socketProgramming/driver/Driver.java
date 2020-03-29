@@ -3,13 +3,19 @@ package socketProgramming.src.socketProgramming.driver;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import socketProgramming.src.socketProgramming.util.CreateWorkers;
 import socketProgramming.src.socketProgramming.util.FileProcessor;
+import socketProgramming.src.socketProgramming.util.IsPrime;
 import socketProgramming.src.socketProgramming.util.MyLogger;
+import socketProgramming.src.socketProgramming.util.Results;
 import socketProgramming.src.socketProgramming.util.MyLogger.DebugLevel;
 
+/**
+ * @author Akshay Anvekar and Kenneth Fernandes
+ */
 public class Driver 
 {
-	public static void main(String[] args)
+	public static void main(String[] args) throws InterruptedException
 	{
 		try
 		{
@@ -25,29 +31,37 @@ public class Driver
 				System.exit(0);
 			}
 			
-			//Check if the number of threads is between 1 and 5
+			//To check if the number of threads is between 1 and 5
 			if(!(Integer.parseInt(args[1]) >= 1 && Integer.parseInt(args[1]) <= 5))
 			{
 				System.err.println("Error: Incorrect value of NUM_THREADS. The expected value of NUM_THREADS is between 1 and 5.");
 				System.exit(0);
 			}
 			
-			//Check if the debug value is between 0 and 4
+			//To check if the debug value is between 0 and 4
 			if(!(Integer.parseInt(args[2]) >= 0 && Integer.parseInt(args[2]) <= 4))
 			{
 				System.err.println("Error: Incorrect value of DEBUG_VALUE. The expected value of NUM_THREADS is 0 and 4.");
 				System.exit(0);
 			}
 			
-			//Set the debug level
+			
 			MyLogger.setDebugValue(Integer.parseInt(args[2]));
 
 			FileProcessor fp = new FileProcessor(args[0]);
+			Results results = new Results();
+			IsPrime isPrime = new IsPrime();
+
+			
+			CreateWorkers workers = new CreateWorkers(fp, results, isPrime);
+			workers.startWorkers(Integer.parseInt(args[1]));
+
+			MyLogger.writeMessage(results.toString(), DebugLevel.RESULTS);
 			
 		}
 		catch(NumberFormatException e)
 		{
-			System.err.println("Error: Numerical values should be entered for NUM_THREADS and DEBUG_VALUE");
+			System.err.println("Error: Please enter number as an input  for NUM_THREADS and DEBUG_VALUE");
 			e.printStackTrace();
 		}
 		catch(FileNotFoundException e)
@@ -55,6 +69,10 @@ public class Driver
 			MyLogger.writeExceptionMessage(e, DebugLevel.NO_OUTPUT);
 		}
 		catch(IOException e)
+		{
+			MyLogger.writeExceptionMessage(e, DebugLevel.NO_OUTPUT);
+		}
+		catch(InterruptedException e)
 		{
 			MyLogger.writeExceptionMessage(e, DebugLevel.NO_OUTPUT);
 		}
