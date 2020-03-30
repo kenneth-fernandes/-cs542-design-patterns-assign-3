@@ -35,6 +35,7 @@ public class MyLogger
 	{
 		switch(level)
 		{
+			
 			case 4:
 				debugValue = DebugLevel.CONSTRUCTOR;
 				break;
