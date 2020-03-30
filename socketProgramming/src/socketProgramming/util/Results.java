@@ -1,22 +1,21 @@
 package socketProgramming.util;
 
-import java.util.Vector;
-
+import java.util.ArrayList;
+import java.util.List;
 import socketProgramming.util.MyLogger.DebugLevel;
 
 /**
- * The Class Results store the result of Prime numbers in an ArrayList Data
- * Structure and prints on console
+ * The Class Results store the result of Prime numbers in an ArrayList 
+ * Data Structure and prints on console
  * 
  * @author Akshay Anvekar and Kenneth Fernandes
  */
 public class Results {
-	private Vector<Integer> primeNumsVector;
-	private InputParametersData inputParamsDataObj = InputParametersData.getInstance();
+	private List<Integer> primeNumList;
 
 	public Results() {
 		MyLogger.writeMessage("Results()", DebugLevel.CONSTRUCTOR);
-		primeNumsVector = new Vector<>();
+		primeNumList = new ArrayList<Integer>();
 	}
 
 	/**
@@ -27,13 +26,12 @@ public class Results {
 	 */
 	public synchronized void addPrimeNum(int primeNum) {
 		MyLogger.writeMessage("addPrimeNo()", DebugLevel.RESULTS_ADDED);
-		if (primeNumsVector.size() < inputParamsDataObj.getResultDataCapacity()) {
-			primeNumsVector.add(primeNum);
-		}
+		primeNumList.add(primeNum);
 	}
 
 	@Override
 	public String toString() {
-		return "Results: " + primeNumsVector.toString();
+		System.out.println(primeNumList.toString());
+		return "Results: " + primeNumList.toString();
 	}
 }
