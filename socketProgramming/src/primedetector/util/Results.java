@@ -1,8 +1,8 @@
-package socketProgramming.util;
+package primedetector.util;
 
 import java.util.Vector;
 
-import socketProgramming.util.MyLogger.DebugLevel;
+import primedetector.util.MyLogger.DebugLevel;
 
 /**
  * The Class Results store the result of Prime numbers in an ArrayList Data
@@ -30,6 +30,10 @@ public class Results {
 		if (primeNumsVector.size() < inputParamsDataObj.getResultDataCapacity()) {
 			primeNumsVector.add(primeNum);
 		}
+	}
+
+	public synchronized Vector<Integer> getResultVector(){
+		return primeNumsVector;
 	}
 
 	@Override

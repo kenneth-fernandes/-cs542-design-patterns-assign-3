@@ -1,6 +1,6 @@
-package socketProgramming.util;
+package primedetector.util;
 
-import socketProgramming.util.MyLogger.DebugLevel;
+import primedetector.util.MyLogger.DebugLevel;
 
 /**
  * The class IsPrime checks whether a given number is prime

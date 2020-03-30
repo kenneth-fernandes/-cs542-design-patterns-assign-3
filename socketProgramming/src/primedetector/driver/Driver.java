@@ -1,15 +1,16 @@
-package socketProgramming.driver;
+package primedetector.driver;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import socketProgramming.util.CreateWorkers;
-import socketProgramming.util.FileProcessor;
-import socketProgramming.util.InputParametersData;
-import socketProgramming.util.IsPrime;
-import socketProgramming.util.MyLogger;
-import socketProgramming.util.Results;
-import socketProgramming.util.MyLogger.DebugLevel;
+import primedetector.util.CreateWorkers;
+import primedetector.util.DataSender;
+import primedetector.util.FileProcessor;
+import primedetector.util.InputParametersData;
+import primedetector.util.IsPrime;
+import primedetector.util.MyLogger;
+import primedetector.util.Results;
+import primedetector.util.MyLogger.DebugLevel;
 
 /**
  * @author Akshay Anvekar and Kenneth Fernandes
@@ -59,6 +60,11 @@ public class Driver {
 
 			CreateWorkers workers = CreateWorkers.getInstance(fp, results, isPrime);
 			workers.startWorkers(inputParamsDataObj.getNumOfThreads());
+
+			DataSender dataSenderClient = DataSender.getInstance(inputParamsDataObj.getPersistSvcIPAddr(),
+					inputParamsDataObj.getPersistSvcPortNum());
+			
+
 
 			MyLogger.writeMessage(results.toString(), DebugLevel.RESULTS);
 

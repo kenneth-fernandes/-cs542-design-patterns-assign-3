@@ -1,4 +1,4 @@
-package socketProgramming.util;
+package primedetector.util;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;

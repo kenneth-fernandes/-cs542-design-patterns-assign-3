@@ -1,7 +1,7 @@
-package socketProgramming.util;
+package primedetector.util;
 
 import java.io.IOException;
-import socketProgramming.util.MyLogger.DebugLevel;
+import primedetector.util.MyLogger.DebugLevel;
 
 /**
  * The CreateWorkers Class contains startWorkers() method which

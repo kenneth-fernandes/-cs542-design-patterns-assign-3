@@ -1,10 +1,12 @@
-package socketProgramming.util;
+package primedetector.util;
+
+import primedetector.util.MyLogger.DebugLevel;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import socketProgramming.util.MyLogger.DebugLevel;
+
 
 
 /**

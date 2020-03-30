@@ -1,4 +1,4 @@
-package socketProgramming.util;
+package primedetector.util;
 
 /**
  * The class MyLogger is for implementing the logger

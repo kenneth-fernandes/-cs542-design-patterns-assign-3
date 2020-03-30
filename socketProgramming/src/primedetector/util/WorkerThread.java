@@ -1,7 +1,7 @@
-package socketProgramming.util;
+package primedetector.util;
 
 import java.io.IOException;
-import socketProgramming.util.MyLogger.DebugLevel;
+import primedetector.util.MyLogger.DebugLevel;
 
 /**
  * WorkerThread class is for implementing the worker thread which reads
