@@ -4,6 +4,7 @@
     <property name="src" value="src" />
     <property name="BUILD" value="src/BUILD" />
     <property name="classes" value="${BUILD}/classes" />
+    <property name="outputFile" value="${BUILD}/outputFile" />
 
     <target name="all" depends="compile_all" />
 
@@ -17,22 +18,23 @@
     <target name="prepare">
         <mkdir dir="${BUILD}" />
         <mkdir dir="${classes}" />
+        <mkdir dir="${outputFile}" />
     </target>
 
-    <target name="jar">
+    <target name="prime-detector-jar">
         <mkdir dir="${BUILD}/jar" />
-        <jar destfile="${BUILD}/jar/primedetector.jar" basedir="${BUILD}/classes">
+        <jar destfile="${BUILD}/jar/primeDetector.jar" basedir="${BUILD}/classes">
             <manifest>
-                <attribute name="Main-Class" value="primedetector.driver.Driver" />
+                <attribute name="Main-Class" value="prime.driver.Driver" />
             </manifest>
         </jar>
     </target>
 
-    <target name="jar">
+    <target name="persister-service-jar">
         <mkdir dir="${BUILD}/jar" />
-        <jar destfile="${BUILD}/jar/persisterservice.jar" basedir="${BUILD}/classes">
+        <jar destfile="${BUILD}/jar/persisterService.jar" basedir="${BUILD}/classes">
             <manifest>
-                <attribute name="Main-Class" value="persisterservice.driver.Driver" />
+                <attribute name="Main-Class" value="persister.driver.Driver" />
             </manifest>
         </jar>
     </target>
@@ -43,14 +45,32 @@
     <!-- for just java files use *.java -->
 
     <target name="socketProgramming" depends="prepare">
-        <javac includeantruntime="false" srcdir="${src}" includes="socketProgramming/**" excludes="**/package.html" destdir="${classes}" classpath="${classes}" debug="on" optimize="on" deprecation="off" />
+        <javac includeantruntime="false" 
+        srcdir="${src}" 
+        includes="**" 
+        excludes="**/package.html" 
+        destdir="${classes}" 
+        classpath="${classes}" 
+        debug="on" 
+        optimize="on" 
+        deprecation="off" />
     </target>
 
-    <target name="run" depends="jar">
-        <java jar="${BUILD}/jar/socketProgramming.jar" fork="true">
+    <target name="run-prime-detector" depends="prime-detector-jar">
+        <java jar="${BUILD}/jar/primeDetector.jar" fork="true">
             <arg value="${arg0}" />
             <arg value="${arg1}" />
             <arg value="${arg2}" />
+            <arg value="${arg3}" />
+            <arg value="${arg4}" />
+            <arg value="${arg5}" />
+        </java>
+    </target>
+
+    <target name="run-persister-service" depends="persister-service-jar">
+        <java jar="${BUILD}/jar/persisterService.jar" fork="true">
+            <arg value="${arg0}" />
+            <arg value="${arg1}" />
         </java>
     </target>
 
