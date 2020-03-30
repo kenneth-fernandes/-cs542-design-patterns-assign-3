@@ -30,6 +30,10 @@ Description: Compiles your code and generates .class files inside the BUILD fold
 -----------------------------------------------------------------------
 ## Instruction to run:
 
-####Command: ant -buildfile socketProgramming/src/build.xml run -Darg0=<input_file.txt> -Darg1=<number_of_threads> -Darg2=<debug_level>
+####Command: 
+1. Persister Service:
+ant -buildfile socketProgramming/src/build.xml run-persister-service -Darg0="src/BUILD/outputFile/output.txt" -Darg1=5000
+2. Prime Detector: 
+ant -buildfile socketProgramming/src/build.xml run-prime-detector -Darg0="src/input.txt" -Darg1=5 -Darg2=5 -Darg3="127.0.0.1" -Darg4=5000 -Darg5=1 
 
 Note: Arguments accept the absolute path of the files.
