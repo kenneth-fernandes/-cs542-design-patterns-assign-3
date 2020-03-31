@@ -13,8 +13,12 @@ import prime.util.FileProcessor;
  * @author Akshay Anvekar and Kenneth Fernandes
  */
 public class ThreadPool {
+
+	// Stores the list of Threads of type Runnable
 	private static List<Runnable> threadList;
-	private static int noThreads = 0;
+
+	// Store the count of threads
+	private static int threadCount = 0;
 
 	/**
 	 * Function to add the thread to the Thread pool
@@ -35,7 +39,7 @@ public class ThreadPool {
 	 * @param The IsPrime object "isPrime" for checking if a number is prime
 	 */
 	public static void createThreads(int numOfThreads, FileProcessor fp, PrimeDetectrResultsI results, IsPrimeI isPrimeObj) {
-		noThreads = numOfThreads;
+		threadCount = numOfThreads;
 		threadList = new ArrayList<Runnable>();
 
 		for (int i = 0; i < numOfThreads; i++) {
@@ -65,7 +69,7 @@ public class ThreadPool {
 	 * @return Returns the number of active threads
 	 */
 	public int activeThreads() {
-		return (noThreads - threadList.size());
+		return (threadCount - threadList.size());
 	}
 
 	/**
@@ -79,6 +83,6 @@ public class ThreadPool {
 
 	@Override
 	public String toString() {
-		return "Size of Thread pool is " + noThreads;
+		return "Size of Thread pool is " + threadCount;
 	}
 }

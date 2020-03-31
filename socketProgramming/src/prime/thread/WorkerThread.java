@@ -16,15 +16,21 @@ import prime.util.MyLogger.DebugLevel;
  * @author Akshay Anvekar and Kenneth Fernandes
  */
 public class WorkerThread implements Runnable {
-	private FileProcessor fp;
-	private IsPrimeI isPrime;
-	private PrimeDetectrResultsI results;
+	// Stores the handler of File Procssor object
+	private FileProcessor fileProcessorObj;
 
-	public WorkerThread(FileProcessor fpIn, IsPrimeI isPrimeObj, PrimeDetectrResultsI results2) {
+	// Stores the handler of IsPrime class
+	private IsPrimeI isPrimeObj;
+
+	// Stores the handler of PrimeDetectrResults class
+	private PrimeDetectrResultsI primeDetectrResultsObj;
+
+	public WorkerThread(FileProcessor fileProcessorInObj, IsPrimeI isPrimeInObj,
+			PrimeDetectrResultsI primeDetectrResultsInObj) {
 		MyLogger.writeMessage("WorkerThread()", DebugLevel.CONSTRUCTOR);
-		this.fp = fpIn;
-		this.isPrime = isPrimeObj;
-		this.results = results2;
+		this.fileProcessorObj = fileProcessorInObj;
+		this.isPrimeObj = isPrimeInObj;
+		this.primeDetectrResultsObj = primeDetectrResultsInObj;
 	}
 
 	/**
@@ -40,12 +46,12 @@ public class WorkerThread implements Runnable {
 			/*
 			 * This reads the file line by line until the end of the file is reached
 			 */
-			while ((line = fp.readLine()) != null) {
+			while ((line = fileProcessorObj.readLine()) != null) {
 				// Check if the number is prime
-				boolean prime = isPrime.checkNum(Integer.parseInt(line));
+				boolean prime = isPrimeObj.checkNum(Integer.parseInt(line));
 
 				if (prime)
-					results.addPrimeNum(Integer.parseInt(line));
+					primeDetectrResultsObj.addPrimeNum(Integer.parseInt(line));
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -55,6 +61,7 @@ public class WorkerThread implements Runnable {
 
 	@Override
 	public String toString() {
-		return "This is a WorkerThread (fp=" + fp + ", results=" + results + ", isPrime=" + isPrime + ")";
+		return "This is a WorkerThread (fp=" + fileProcessorObj + ", results=" + primeDetectrResultsObj + ", isPrime="
+				+ isPrimeObj + ")";
 	}
 }

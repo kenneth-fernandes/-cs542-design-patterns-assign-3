@@ -15,10 +15,17 @@ import prime.util.MyLogger.DebugLevel;
  * @author Akshay Anvekar and Kenneth Fernandes
  */
 public class CreateWorkers {
+	// Stores the handler of CreateWorkers instance
 	private static CreateWorkers createWrkrsObj = new CreateWorkers();
-	private FileProcessor fp;
+
+	// Stores the handler of FileProcessor
+	private FileProcessor fileProcessorObj;
+
+	// Stores the handler of IsPrime instance
 	private IsPrimeI isPrimeObj;
-	private PrimeDetectrResultsI results;
+
+	// Stores the handler of PrimeDetectrResults instance
+	private PrimeDetectrResultsI primeDetectrResultsObj;
 
 	private CreateWorkers() {
 		MyLogger.writeMessage("CreateWorkers()", DebugLevel.CONSTRUCTOR);
@@ -27,15 +34,15 @@ public class CreateWorkers {
 	/**
 	 * The function returns the single object of CreateWorkers class
 	 * 
-	 * @param fpIn      - The FileProcessor class object
-	 * @param results2 - The Results class object
+	 * @param fpIn       - The FileProcessor class object
+	 * @param results2   - The Results class object
 	 * @param isPrimeObj - The IsPrime class object
 	 * @return - The CreateWorkers class object
 	 */
 	public static CreateWorkers getInstance(FileProcessor fpIn, PrimeDetectrResultsI results2, IsPrimeI isPrimeObj) {
-		createWrkrsObj.fp = fpIn;
+		createWrkrsObj.fileProcessorObj = fpIn;
 		createWrkrsObj.isPrimeObj = isPrimeObj;
-		createWrkrsObj.results = results2;
+		createWrkrsObj.primeDetectrResultsObj = results2;
 		return createWrkrsObj;
 	}
 
@@ -53,7 +60,7 @@ public class CreateWorkers {
 		/**
 		 * To Call the createThreads function with required set of parameters
 		 */
-		ThreadPool.createThreads(numOfThreads, fp, results, isPrimeObj);
+		ThreadPool.createThreads(numOfThreads, fileProcessorObj, primeDetectrResultsObj, isPrimeObj);
 
 		/*
 		 * Borrowing of the threads, one thread at a time and starting the thread and
@@ -71,9 +78,9 @@ public class CreateWorkers {
 			}
 		}
 
-		// File Closing
+		// Closing the file in file processor
 		try {
-			fp.closeFile();
+			fileProcessorObj.closeFile();
 		} catch (IOException e) {
 			throw e;
 		}
@@ -81,6 +88,7 @@ public class CreateWorkers {
 
 	@Override
 	public String toString() {
-		return "CreateWorkers (fp=" + fp + ", results=" + results + ", isPrime=" + isPrimeObj + ")";
+		return "CreateWorkers (createWrkrsObj = " + createWrkrsObj + ", fileProcessorObj = " + fileProcessorObj
+				+ ", primeDetectrResultsObj = " + primeDetectrResultsObj + ", isPrimeObj =" + isPrimeObj + ")";
 	}
 }
