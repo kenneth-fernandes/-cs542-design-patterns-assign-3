@@ -44,6 +44,7 @@ Note: Arguments accept the absolute path of the files.
 1. Assumptions:
 
 2. Data structures:
+- Vector: Used for storing the prime number results as it is thread safe.
 
 3. External Materials:
 
