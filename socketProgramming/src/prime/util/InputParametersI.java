@@ -4,7 +4,10 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 /**
- * InputParametersI
+ * InputParametersI interface - Contains methods for storing and retrieving
+ * command line arguments passed to the application
+ * 
+ * @author Akshay Anvekar and Kenneth Fernandes
  */
 public interface InputParametersI {
 
