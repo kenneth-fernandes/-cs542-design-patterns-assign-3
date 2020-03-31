@@ -1,5 +1,4 @@
 package prime.result;
-
 import java.util.Vector;
 
 /**
@@ -10,4 +9,6 @@ public interface PrimeDetectrResultsI {
     public void addPrimeNum(int primeNum);
 
     public Vector<Integer> getResultVector();
+
+    public int getSumOfPrimeNumbers();
 }

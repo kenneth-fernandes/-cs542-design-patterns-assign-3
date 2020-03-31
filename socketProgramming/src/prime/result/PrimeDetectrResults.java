@@ -1,5 +1,4 @@
 package prime.result;
-
 import java.util.Vector;
 
 import prime.util.InputParametersI;
