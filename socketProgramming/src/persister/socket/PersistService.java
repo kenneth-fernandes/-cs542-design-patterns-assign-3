@@ -1,10 +1,7 @@
 package persister.socket;
 
 import java.io.BufferedInputStream;
-import java.io.BufferedWriter;
 import java.io.DataInputStream;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -17,24 +14,42 @@ import prime.util.MyLogger;
 import prime.util.MyLogger.DebugLevel;
 
 /**
+ * This class contains methods to initiate Persister Service and listen to any
+ * incoming request that needs to be process
  * 
+ * @author Akshay Anvekar and Kenneth Fernandes
  */
 public class PersistService implements PersistServiceI {
+
+    // Stores the Persist Service socket
     private Socket socket;
+
+    // Stores the Persist Service server socket
     private ServerSocket server;
+
+    // Stores the DataInputStream object for reading the data sent by Data Sender
     private DataInputStream inputDataStrmObj;
-    private BufferedWriter buffrdWriter;
-    private File file;
-    private FileWriter fileWriter;
+
+    // Stores the port number for server to listen
     private int portNum;
+
+    // Store the file path of output
     private String outputFilePath;
+
+    // Stores the result data sent by DataSender
     private String resultDataStr;
+
+    // Stores the instance of PersistService of type PersistServiceI
     private static PersistServiceI persistSvcObj = new PersistService();
+
+    // Stores the instance of PersisterResults of type PersisterResultsI
     private PersisterResultsI persistrResultsObj;
+
+    // Stores the instance of PersistToFile of type PersistToFileI
     private PersistToFileI persistToFileObj;
 
     /**
-     * 
+     * PersistService constructor
      */
     private PersistService() {
         MyLogger.writeMessage("PersistService()", DebugLevel.CONSTRUCTOR);
@@ -45,15 +60,21 @@ public class PersistService implements PersistServiceI {
     }
 
     /**
+     * Yhis function returns the single instance of PersistService of type
+     * PersistServiceI
      * 
-     * @return
+     * @return - Instance of PersistService of type PersistServiceI
      */
     public static PersistServiceI getInstance() {
         return persistSvcObj;
     }
 
     /**
+     * This functio intialized the PersistService Server Socket connection
      * 
+     * @param inputDataPortNum - Port number
+     * @param filePath         - File path to persist data to output file
+     * @exception IOException
      */
     public void initSocketConnection(int inputDataPortNum, String filePath) throws IOException {
 
@@ -63,7 +84,7 @@ public class PersistService implements PersistServiceI {
     }
 
     /**
-     * 
+     * This function processes the Data retrieval from the Data Sender Client
      */
     public void processDataRetrieval() {
         try {
@@ -84,7 +105,7 @@ public class PersistService implements PersistServiceI {
     }
 
     /**
-     * 
+     * This function Closes the Server Socket connectiom
      */
     public void closeConnection() {
         try {
@@ -98,8 +119,8 @@ public class PersistService implements PersistServiceI {
     @Override
     public String toString() {
 
-        return "This is PersisterService ( socket = " + socket + " " + server + " " + inputDataStrmObj + " "
-                + buffrdWriter + " " + file + " " + fileWriter + " " + portNum + " " + outputFilePath + " "
-                + persistSvcObj + " )";
+        return "This is PersisterService ( socket = " + socket + ", server =  " + server + ", inputDataStrmObj = "
+                + inputDataStrmObj + ", portNum =  " + portNum + ", outputFilePath =  " + outputFilePath
+                + ", persistSvcObj = " + persistSvcObj + " )";
     }
 }

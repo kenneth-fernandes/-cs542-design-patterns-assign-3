@@ -12,7 +12,7 @@ public class Driver {
 	public static void main(String[] args) throws InterruptedException {
 		try {
 			InputParametersI inputParamsObj = PersistSvcInput.getInstance();
-			
+
 			/*
 			 * As the build.xml specifies the arguments as argX, in case the argument value
 			 * is not given java takes the default value specified in build.xml. To avoid
@@ -25,14 +25,16 @@ public class Driver {
 				inputParamsObj.setPersistSvcPortNum(args[1]);
 				inputParamsObj.setOutputFilePath(args[0]);
 			}
-
+			/**
+			 * Intializing the Persister Service for persisting the data to the outputfile
+			 */
 			PersistServiceI persistSvcObj = PersistService.getInstance();
 
 			persistSvcObj.initSocketConnection(inputParamsObj.getPersistSvcPortNum(),
-			inputParamsObj.getOutputFilePath());
+					inputParamsObj.getOutputFilePath());
 			persistSvcObj.processDataRetrieval();
 			persistSvcObj.closeConnection();
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
