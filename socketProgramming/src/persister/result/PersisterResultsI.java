@@ -6,6 +6,9 @@ package persister.result;
 public interface PersisterResultsI {
 
     public void storeResultData(String result);
-    public String getStoredResult();
-    
+
+    public String getStoredPersisterResult();
+
+    public int getStoredResultAvg();
+
 }

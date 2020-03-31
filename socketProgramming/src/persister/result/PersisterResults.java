@@ -11,6 +11,7 @@ import prime.util.MyLogger.DebugLevel;
 public class PersisterResults implements PersisterResultsI {
 
     private String persisterResult = "";
+    private int additionResult;
 
     private static PersisterResultsI persistResultObj = new PersisterResults();
 
@@ -33,6 +34,7 @@ public class PersisterResults implements PersisterResultsI {
      * 
      */
     public void storeResultData(String result) {
+        additionResult += Integer.parseInt(result);
         persisterResult = persisterResult.concat(result + "\n");
     }
 
@@ -40,8 +42,16 @@ public class PersisterResults implements PersisterResultsI {
      * 
      * @return
      */
-    public String getStoredResult() {
+    public String getStoredPersisterResult() {
         return persisterResult;
+    }
+
+    /**
+     * 
+     * @return
+     */
+    public int getStoredResultAvg() {
+        return additionResult;
     }
 
 }
