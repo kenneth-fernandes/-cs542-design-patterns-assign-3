@@ -13,6 +13,7 @@ import prime.util.PrimeDetectorInput;
 import prime.result.Results;
 import prime.util.MyLogger.DebugLevel;
 import prime.socket.DataSender;
+import prime.socket.DataSenderI;
 
 /**
  * @author Akshay Anvekar and Kenneth Fernandes
@@ -63,12 +64,12 @@ public class Driver {
 			CreateWorkers workers = CreateWorkers.getInstance(fp, results, isPrimeObj);
 			workers.startWorkers(inputParamsObj.getNumOfThreads());
 
-			DataSender dataSenderClient = DataSender.getInstance(inputParamsObj.getPersistSvcIPAddr(),
-					inputParamsObj.getPersistSvcPortNum());
+			DataSenderI dataSenderClient = DataSender.getInstance();
 
-			dataSenderClient.initSocketConnection();
-			dataSenderClient.processData();
-			dataSenderClient.closeConnection();
+			dataSenderClient.initSocketConnectn(inputParamsObj.getPersistSvcIPAddr(),
+					inputParamsObj.getPersistSvcPortNum());
+			dataSenderClient.processDataTransfer();
+			dataSenderClient.closeConnectn();
 
 			MyLogger.writeMessage(results.toString(), DebugLevel.RESULTS);
 

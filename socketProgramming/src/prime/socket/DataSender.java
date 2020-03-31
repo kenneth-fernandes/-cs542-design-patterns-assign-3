@@ -9,53 +9,59 @@ import java.util.Enumeration;
 
 import prime.result.Results;
 
-public class DataSender {
-    private Socket socket = null;
-    private DataOutputStream out = null;
-
+public class DataSender implements DataSenderI {
+    private Socket socketObj = null;
+    private DataOutputStream outDataStreamObj = null;
     private InetAddress addrObj = null;
     private int portNum;
-    private static DataSender dataSenderObj = new DataSender();
+    private static DataSenderI dataSenderObj = new DataSender();
+    private Enumeration<Integer> enumeratnObj;
 
     private DataSender() {
     }
 
-    public static DataSender getInstance(InetAddress addrObj, int portNum)
+    public static DataSenderI getInstance()
             throws NumberFormatException, UnknownHostException {
-        dataSenderObj.addrObj = addrObj;
-        dataSenderObj.portNum = portNum;
         return dataSenderObj;
     }
 
-    public void initSocketConnection() {
+    public void initSocketConnectn(InetAddress addrObj, int portNum) {
         try {
-            socket = new Socket(addrObj, portNum);
-            out = new DataOutputStream(socket.getOutputStream());
-        } catch (UnknownHostException u) {
-            System.out.println(u);
+            socketObj = new Socket(addrObj, portNum);
+            outDataStreamObj = new DataOutputStream(socketObj.getOutputStream());
+
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
         } catch (IOException e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
     }
 
-    public void processData() {
-        Enumeration<Integer> en = Results.getInstance().getResultVector().elements();
+    public void processDataTransfer() {
+        enumeratnObj = Results.getInstance().getResultVector().elements();
         try {
-            while (en.hasMoreElements()) {
-                out.writeUTF(en.nextElement().toString());
+            while (enumeratnObj.hasMoreElements()) {
+                outDataStreamObj.writeUTF(enumeratnObj.nextElement().toString());
             }
-            out.flush();
-        } catch (Exception e) {
-            System.out.println(e);
+            outDataStreamObj.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
-    public void closeConnection() {
+    public void closeConnectn() {
         try {
-            out.close();
-            socket.close();
+            outDataStreamObj.close();
+            socketObj.close();
         } catch (IOException e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
+    }
+
+    @Override
+    public String toString() {
+        return "DataSender class data members state: socketObj = " + socketObj+ ", outDataStreamObj =  "
+                + outDataStreamObj + ", addrObj = " + addrObj + ", portNum" + portNum + ", dataSenderObj = "
+                + dataSenderObj + ", enumeratnObj = " + enumeratnObj;
     }
 }
