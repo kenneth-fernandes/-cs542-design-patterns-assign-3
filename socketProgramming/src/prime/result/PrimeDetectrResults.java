@@ -34,7 +34,7 @@ public class PrimeDetectrResults implements PrimeDetectrResultsI {
 	 * @param primeNo The prime number to be added to the list
 	 */
 	public synchronized void addPrimeNum(int primeNum) {
-		MyLogger.writeMessage("addPrimeNo()", DebugLevel.RESULTS_ADDED);
+		MyLogger.writeMessage("addPrimeNum()", DebugLevel.RESULTS_ADDED);
 
 		if (primeNumsVector.size() < inputParamsObj.getResultDataCapacity()) {
 			primeNumsVector.add(primeNum);
@@ -47,6 +47,7 @@ public class PrimeDetectrResults implements PrimeDetectrResultsI {
 	}
 
 	public synchronized int getSumOfPrimeNumbers() {
+		
 		return primeNumsSum;
 	}
 

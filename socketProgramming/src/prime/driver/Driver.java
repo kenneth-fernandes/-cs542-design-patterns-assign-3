@@ -74,6 +74,9 @@ public class Driver {
 
 			MyLogger.writeMessage(results.toString(), DebugLevel.RESULTS);
 
+			MyLogger.writeMessage("The sum of all the prime numbers is: " + results.getSumOfPrimeNumbers(),
+					DebugLevel.NO_OUTPUT);
+
 		} catch (NumberFormatException e) {
 			System.err.println("Error: Please enter number as an input  for NUM_THREADS and DEBUG_VALUE");
 			e.printStackTrace();
