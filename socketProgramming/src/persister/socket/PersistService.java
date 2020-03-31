@@ -11,6 +11,8 @@ import java.net.Socket;
 
 import persister.result.PersisterResults;
 import persister.result.PersisterResultsI;
+import persister.util.PersistToFile;
+import persister.util.PersistToFileI;
 import prime.util.MyLogger;
 import prime.util.MyLogger.DebugLevel;
 
@@ -29,6 +31,7 @@ public class PersistService implements PersistServiceI {
     private String resultDataStr;
     private static PersistServiceI persistSvcObj = new PersistService();
     private PersisterResultsI persistrResultsObj;
+    private PersistToFileI persistToFileObj;
 
     /**
      * 
@@ -38,6 +41,7 @@ public class PersistService implements PersistServiceI {
         resultDataStr = "";
         outputFilePath = "";
         persistrResultsObj = PersisterResults.getInstance();
+        persistToFileObj = PersistToFile.getInstance();
     }
 
     /**
@@ -54,7 +58,7 @@ public class PersistService implements PersistServiceI {
     public void initSocketConnection(int inputDataPortNum, String filePath) throws IOException {
 
         server = new ServerSocket(inputDataPortNum);
-        file = new File(outputFilePath);
+        outputFilePath = filePath;
         inputDataStrmObj = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
     }
 
@@ -64,32 +68,18 @@ public class PersistService implements PersistServiceI {
     public void processDataRetrieval() {
         try {
             socket = server.accept();
-            if (!file.exists()) {
-                file.createNewFile();
-            }
-            fileWriter = new FileWriter(file);
-            buffrdWriter = new BufferedWriter(fileWriter);
 
             while (resultDataStr.equals("STOP") || inputDataStrmObj.available() > 0) {
                 resultDataStr = inputDataStrmObj.readUTF();
                 persistrResultsObj.storeResultData(resultDataStr);
-
-                buffrdWriter.write(resultDataStr + "\n");
-                buffrdWriter.flush();
-
             }
+
+            persistToFileObj.openFile(outputFilePath);
+            persistToFileObj.writeLine(persistrResultsObj.getStoredPersisterResult());
+            persistToFileObj.closeFile();
 
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                if (buffrdWriter != null)
-                    buffrdWriter.close();
-                if (fileWriter != null)
-                    fileWriter.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
     }
 
