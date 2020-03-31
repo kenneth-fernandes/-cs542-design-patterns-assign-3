@@ -165,7 +165,9 @@ public class PrimeDetectorInput implements InputParametersI {
 
     @Override
     public String toString() {
-        return "InputParameters class data members : " + inputFilePath + " " + numOfThreads + " " + resultDataCapacity
-                + " " + persistSvcIPAddrObj.toString() + " " + persistSvcPort + " " + debugVal;
+        return "InputParameters class : ( inputFilePath = " + inputFilePath + ", numOfThreads = " + numOfThreads
+                + ", resultDataCapacity  " + resultDataCapacity + ", persistSvcIPAddrObj.getAddress() = "
+                + persistSvcIPAddrObj.getAddress() + ", persistSvcPort = " + persistSvcPort + ", debugVal = " + debugVal
+                + " )";
     }
 }
