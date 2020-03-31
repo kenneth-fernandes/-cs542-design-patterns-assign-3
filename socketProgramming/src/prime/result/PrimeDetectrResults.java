@@ -2,7 +2,6 @@ package prime.result;
 
 import java.util.Vector;
 
-
 import prime.util.InputParametersI;
 import prime.util.MyLogger;
 import prime.util.PrimeDetectorInput;
@@ -14,17 +13,17 @@ import prime.util.MyLogger.DebugLevel;
  * 
  * @author Akshay Anvekar and Kenneth Fernandes
  */
-public class Results {
-	private static Results resultsObj = new Results();
+public class PrimeDetectrResults implements PrimeDetectrResultsI {
+	private static PrimeDetectrResultsI resultsObj = new PrimeDetectrResults();
 	private Vector<Integer> primeNumsVector;
 	private InputParametersI inputParamsObj = PrimeDetectorInput.getInstance();
 
-	private Results() {
+	private PrimeDetectrResults() {
 		MyLogger.writeMessage("Results()", DebugLevel.CONSTRUCTOR);
 		primeNumsVector = new Vector<>();
 	}
 
-	public static Results getInstance(){
+	public static PrimeDetectrResultsI getInstance() {
 		return resultsObj;
 	}
 
@@ -36,7 +35,7 @@ public class Results {
 	 */
 	public synchronized void addPrimeNum(int primeNum) {
 		MyLogger.writeMessage("addPrimeNo()", DebugLevel.RESULTS_ADDED);
-		
+
 		if (primeNumsVector.size() < inputParamsObj.getResultDataCapacity()) {
 			primeNumsVector.add(primeNum);
 		}

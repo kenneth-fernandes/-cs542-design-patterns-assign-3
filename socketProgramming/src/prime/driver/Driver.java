@@ -10,7 +10,8 @@ import prime.calculation.IsPrime;
 import prime.calculation.IsPrimeI;
 import prime.util.MyLogger;
 import prime.util.PrimeDetectorInput;
-import prime.result.Results;
+import prime.result.PrimeDetectrResultsI;
+import prime.result.PrimeDetectrResults;
 import prime.util.MyLogger.DebugLevel;
 import prime.socket.DataSender;
 import prime.socket.DataSenderI;
@@ -58,7 +59,7 @@ public class Driver {
 			MyLogger.setDebugValue(inputParamsObj.getDebugValue());
 
 			FileProcessor fp = new FileProcessor(inputParamsObj.getInputFilePath());
-			Results results = Results.getInstance();
+			PrimeDetectrResultsI results = PrimeDetectrResults.getInstance();
 			IsPrimeI isPrimeObj = IsPrime.getInstance();
 
 			CreateWorkers workers = CreateWorkers.getInstance(fp, results, isPrimeObj);

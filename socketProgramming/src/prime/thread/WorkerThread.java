@@ -3,7 +3,7 @@ package prime.thread;
 import java.io.IOException;
 
 import prime.calculation.IsPrimeI;
-import prime.result.Results;
+import prime.result.PrimeDetectrResultsI;
 import prime.util.FileProcessor;
 import prime.util.MyLogger;
 import prime.util.MyLogger.DebugLevel;
@@ -18,13 +18,13 @@ import prime.util.MyLogger.DebugLevel;
 public class WorkerThread implements Runnable {
 	private FileProcessor fp;
 	private IsPrimeI isPrime;
-	private Results results;
+	private PrimeDetectrResultsI results;
 
-	public WorkerThread(FileProcessor fpIn, IsPrimeI isPrimeObj, Results resultsIn) {
+	public WorkerThread(FileProcessor fpIn, IsPrimeI isPrimeObj, PrimeDetectrResultsI results2) {
 		MyLogger.writeMessage("WorkerThread()", DebugLevel.CONSTRUCTOR);
 		this.fp = fpIn;
 		this.isPrime = isPrimeObj;
-		this.results = resultsIn;
+		this.results = results2;
 	}
 
 	/**

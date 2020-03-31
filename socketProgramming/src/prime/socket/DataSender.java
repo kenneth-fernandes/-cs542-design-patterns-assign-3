@@ -6,8 +6,7 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Enumeration;
-
-import prime.result.Results;
+import prime.result.PrimeDetectrResults;
 
 public class DataSender implements DataSenderI {
     private Socket socketObj = null;
@@ -38,7 +37,7 @@ public class DataSender implements DataSenderI {
     }
 
     public void processDataTransfer() {
-        enumeratnObj = Results.getInstance().getResultVector().elements();
+        enumeratnObj = PrimeDetectrResults.getInstance().getResultVector().elements();
         try {
             while (enumeratnObj.hasMoreElements()) {
                 outDataStreamObj.writeUTF(enumeratnObj.nextElement().toString());

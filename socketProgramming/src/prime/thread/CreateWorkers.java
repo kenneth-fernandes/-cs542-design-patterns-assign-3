@@ -3,7 +3,7 @@ package prime.thread;
 import java.io.IOException;
 
 import prime.calculation.IsPrimeI;
-import prime.result.Results;
+import prime.result.PrimeDetectrResultsI;
 import prime.util.FileProcessor;
 import prime.util.MyLogger;
 import prime.util.MyLogger.DebugLevel;
@@ -18,7 +18,7 @@ public class CreateWorkers {
 	private static CreateWorkers createWrkrsObj = new CreateWorkers();
 	private FileProcessor fp;
 	private IsPrimeI isPrimeObj;
-	private Results results;
+	private PrimeDetectrResultsI results;
 
 	private CreateWorkers() {
 		MyLogger.writeMessage("CreateWorkers()", DebugLevel.CONSTRUCTOR);
@@ -28,14 +28,14 @@ public class CreateWorkers {
 	 * The function returns the single object of CreateWorkers class
 	 * 
 	 * @param fpIn      - The FileProcessor class object
-	 * @param resultsIn - The Results class object
+	 * @param results2 - The Results class object
 	 * @param isPrimeObj - The IsPrime class object
 	 * @return - The CreateWorkers class object
 	 */
-	public static CreateWorkers getInstance(FileProcessor fpIn, Results resultsIn, IsPrimeI isPrimeObj) {
+	public static CreateWorkers getInstance(FileProcessor fpIn, PrimeDetectrResultsI results2, IsPrimeI isPrimeObj) {
 		createWrkrsObj.fp = fpIn;
 		createWrkrsObj.isPrimeObj = isPrimeObj;
-		createWrkrsObj.results = resultsIn;
+		createWrkrsObj.results = results2;
 		return createWrkrsObj;
 	}
 

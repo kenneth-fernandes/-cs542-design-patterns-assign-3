@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import prime.calculation.IsPrimeI;
-import prime.result.Results;
+import prime.result.PrimeDetectrResultsI;
 import prime.util.FileProcessor;
 
 /**
@@ -34,7 +34,7 @@ public class ThreadPool {
 	 * @param The Results object "results" for storing the prime numbers
 	 * @param The IsPrime object "isPrime" for checking if a number is prime
 	 */
-	public static void createThreads(int numOfThreads, FileProcessor fp, Results results, IsPrimeI isPrimeObj) {
+	public static void createThreads(int numOfThreads, FileProcessor fp, PrimeDetectrResultsI results, IsPrimeI isPrimeObj) {
 		noThreads = numOfThreads;
 		threadList = new ArrayList<Runnable>();
 
