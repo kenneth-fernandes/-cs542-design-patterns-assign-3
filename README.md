@@ -64,6 +64,6 @@ Follow the instructions as mentioned above.
 
 -----------------------------------------------------------------------
 ## Academic Honesty statement:
-"We have done this assignment completely on our own. We have not copied it, nor have we given our solution to anyone else. We understand that if we am involved in plagiarism or cheating an official form will be submitted to the Academic Honesty Committee of the Watson School to determine the action that needs to be taken."
+"We have done this assignment completely on our own. We have not copied it, nor have we given our solution to anyone else. We understand that if we are involved in plagiarism or cheating an official form will be submitted to the Academic Honesty Committee of the Watson School to determine the action that needs to be taken."
 
 Date: 03/31/2020
