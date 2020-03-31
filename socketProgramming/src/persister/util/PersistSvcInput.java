@@ -6,8 +6,8 @@ package persister.util;
  */
 public class PersistSvcInput implements InputParametersI {
     /**
-     * Data members of InputParametersData containing input arguments and
-     * InputParametersData object
+     * Data members of PersistSvcInput containing input arguments and
+     * PersistSvcInput object
      */
     private static InputParametersI inputParamsObj = new PersistSvcInput();
 
@@ -34,37 +34,36 @@ public class PersistSvcInput implements InputParametersI {
     }
 
     /**
-     * Function to set Input file path
+     * Function to store Output file path
      * 
-     * @param path
+     * @param path - File path
      */
     public void setOutputFilePath(String path) {
         outputFilePath = path;
     }
 
     /**
-     * Function to get Input file path
+     * Function to retrieve Output file path
      * 
-     * @return - Input filt path
+     * @return - Output file path of type String
      */
     public String getOutputFilePath() {
         return outputFilePath;
     }
 
-    /**
-     * Function to set Running Average window size
+   /**
+     * Function to store the port number of the Persister Service
      * 
-     * @param windowSizeStr - Running Average window size
-     * @throws NumberFormatException - Parsing to integer error exception
+     * @param portNumStr - Port number of type String
      */
     public void setPersistSvcPortNum(String portNumStr) {
         persistSvcPort = Integer.parseInt(portNumStr);
     }
 
     /**
-     * Function to get Running Average window size
+     * Function to retrieve the port number of the Persister Service
      * 
-     * @return - Running Average window size
+     * @return - Port number of type int
      */
     public int getPersistSvcPortNum() {
         return persistSvcPort;

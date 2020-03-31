@@ -10,30 +10,44 @@ import prime.util.MyLogger;
 import prime.util.MyLogger.DebugLevel;
 
 /**
- * PersistToFile
+ * PersistToFile class contains methods to write the data to the output file
  */
 public class PersistToFile implements PersistToFileI {
 
+    // Stores the BufferedWriter instance
     private BufferedWriter buffrdWriter;
+
+    // Stores the File instance
     private File file;
+
+    // Stores the FileWriter instance
     private FileWriter fileWriter;
+
+    // Stores the PersistToFile instance of type PersistToFileI
     private static PersistToFileI persistToFileObj = new PersistToFile();
 
     /**
-     * 
-     * @param filePath
-     * @throws FileNotFoundException
-     * @throws IOException
+     * PersistToFile constructor
      */
     private PersistToFile() {
         MyLogger.writeMessage("PersistToFile()", DebugLevel.CONSTRUCTOR);
 
     }
 
+    /**
+     * This function returns the PersistToFile instance of type PersistToFileI
+     */
     public static PersistToFileI getInstance() {
         return persistToFileObj;
     }
 
+    /**
+     * This function open the file and intializes BufferedWriter
+     * 
+     * @param filePath - Path of the file
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
     public synchronized void openFile(String filePath) throws FileNotFoundException, IOException {
         try {
             file = new File(filePath);
@@ -48,21 +62,23 @@ public class PersistToFile implements PersistToFileI {
     }
 
     /**
+     * This function writes data to bufferedWrite
      * 
-     * 
+     * @param dataStr - The data of type String
      */
     public synchronized void writeLine(String dataStr) throws IOException {
         buffrdWriter.write(dataStr.trim());
-        buffrdWriter.flush();
     }
 
     /**
-     *
+     * This function closes the file connection and flushes the buffrdWriter to the
+     * file
      * 
      * @throws IOException
      */
     public void closeFile() throws IOException {
         try {
+            buffrdWriter.flush();
             if (buffrdWriter != null)
                 buffrdWriter.close();
         } catch (IOException e) {
@@ -72,6 +88,7 @@ public class PersistToFile implements PersistToFileI {
 
     @Override
     public String toString() {
-        return "PersistToFile [buffrdWriter=" + buffrdWriter + "]";
+        return "PersistToFile : (buffrdWriter=" + buffrdWriter + ", file = " + file + ", fileWriter ="
+                + persistToFileObj + ")";
     }
 }
