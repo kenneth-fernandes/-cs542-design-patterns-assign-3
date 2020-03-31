@@ -9,29 +9,48 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import persister.result.PersisterResults;
+import persister.result.PersisterResultsI;
 import prime.util.MyLogger;
 import prime.util.MyLogger.DebugLevel;
 
+/**
+ * 
+ */
 public class PersistService implements PersistServiceI {
-    // initialize socket and input stream
-    private Socket socket = null;
-    private ServerSocket server = null;
-    private DataInputStream inputDataStrmObj = null;
-    private BufferedWriter buffrdWriter = null;
-    private File file = null;
-    private FileWriter fileWriter = null;
+    private Socket socket;
+    private ServerSocket server;
+    private DataInputStream inputDataStrmObj;
+    private BufferedWriter buffrdWriter;
+    private File file;
+    private FileWriter fileWriter;
     private int portNum;
-    private String outputFilePath = "";
+    private String outputFilePath;
+    private String resultDataStr;
     private static PersistServiceI persistSvcObj = new PersistService();
+    private PersisterResultsI persistrResultsObj;
 
+    /**
+     * 
+     */
     private PersistService() {
         MyLogger.writeMessage("PersistService()", DebugLevel.CONSTRUCTOR);
+        resultDataStr = "";
+        outputFilePath = "";
+        persistrResultsObj = PersisterResults.getInstance();
     }
 
+    /**
+     * 
+     * @return
+     */
     public static PersistServiceI getInstance() {
         return persistSvcObj;
     }
 
+    /**
+     * 
+     */
     public void initSocketConnection(int inputDataPortNum, String filePath) throws IOException {
 
         server = new ServerSocket(inputDataPortNum);
@@ -39,6 +58,9 @@ public class PersistService implements PersistServiceI {
         inputDataStrmObj = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
     }
 
+    /**
+     * 
+     */
     public void processDataRetrieval() {
         try {
             socket = server.accept();
@@ -47,15 +69,19 @@ public class PersistService implements PersistServiceI {
             }
             fileWriter = new FileWriter(file);
             buffrdWriter = new BufferedWriter(fileWriter);
-            while (inputDataStrmObj.available() > 0) {
-                buffrdWriter.write(inputDataStrmObj.readUTF() + "\n");
+
+            while (resultDataStr.equals("STOP") || inputDataStrmObj.available() > 0) {
+                resultDataStr = inputDataStrmObj.readUTF();
+                persistrResultsObj.storeResultData(resultDataStr);
+
+                buffrdWriter.write(resultDataStr + "\n");
                 buffrdWriter.flush();
+
             }
 
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-
             try {
                 if (buffrdWriter != null)
                     buffrdWriter.close();
@@ -67,12 +93,15 @@ public class PersistService implements PersistServiceI {
         }
     }
 
+    /**
+     * 
+     */
     public void closeConnection() {
         try {
             socket.close();
             inputDataStrmObj.close();
-        } catch (IOException i) {
-            System.out.println(i);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

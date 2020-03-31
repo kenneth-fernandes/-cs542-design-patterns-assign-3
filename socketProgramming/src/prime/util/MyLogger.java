@@ -94,6 +94,7 @@ public class MyLogger
 			e.printStackTrace();
 	}
 	
+	@Override
 	public String toString()
 	{
 		return "The debug value set is " + debugValue;
