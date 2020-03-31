@@ -8,24 +8,30 @@ import prime.util.MyLogger.DebugLevel;
  * 
  * @author Akshay Anvekar and Kenneth Fernandes
  */
-public class IsPrime {
-    public IsPrime() {
+public class IsPrime implements IsPrimeI {
+    private static IsPrimeI isPrimeObj = new IsPrime();
+
+    private IsPrime() {
         MyLogger.writeMessage("IsPrime()", DebugLevel.CONSTRUCTOR);
+    }
+
+    public static IsPrimeI getInstance() {
+        return isPrimeObj;
     }
 
     /**
      * This is a function to check whether a given number is prime or not
      * 
-     * @param The number "n" is to be checked for prime
+     * @param The number "num" is to be checked for prime
      * @return the return value determines whether "n" is prime
      */
-    public boolean checkNum(int n) {
+    public boolean checkNum(int num) {
         int flag = 0;
-        if (n <= 1)
+        if (num <= 1)
             return false;
 
-        for (int i = 2; i <= n / 2; i++) {
-            if (n % i == 0) {
+        for (int i = 2; i <= num / 2; i++) {
+            if (num % i == 0) {
 
                 flag = 1;
                 return false;
@@ -36,5 +42,5 @@ public class IsPrime {
         return true;
 
     }
-}
 
+}

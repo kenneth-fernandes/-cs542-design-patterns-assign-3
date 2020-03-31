@@ -7,6 +7,7 @@ import prime.thread.CreateWorkers;
 import prime.util.FileProcessor;
 import prime.util.InputParametersI;
 import prime.calculation.IsPrime;
+import prime.calculation.IsPrimeI;
 import prime.util.MyLogger;
 import prime.util.PrimeDetectorInput;
 import prime.result.Results;
@@ -57,9 +58,9 @@ public class Driver {
 
 			FileProcessor fp = new FileProcessor(inputParamsObj.getInputFilePath());
 			Results results = Results.getInstance();
-			IsPrime isPrime = new IsPrime();
+			IsPrimeI isPrimeObj = IsPrime.getInstance();
 
-			CreateWorkers workers = CreateWorkers.getInstance(fp, results, isPrime);
+			CreateWorkers workers = CreateWorkers.getInstance(fp, results, isPrimeObj);
 			workers.startWorkers(inputParamsObj.getNumOfThreads());
 
 			DataSender dataSenderClient = DataSender.getInstance(inputParamsObj.getPersistSvcIPAddr(),
