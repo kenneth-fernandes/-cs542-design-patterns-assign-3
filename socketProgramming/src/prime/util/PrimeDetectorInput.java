@@ -3,6 +3,8 @@ package prime.util;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
+import prime.util.MyLogger.DebugLevel;
+
 /**
  * Class that contains methods to set and retireve the argument passed through
  * command line
@@ -32,6 +34,7 @@ public class PrimeDetectorInput implements InputParametersI {
      * @throws Exception
      */
     private PrimeDetectorInput() {
+        MyLogger.writeMessage("PrimeDetectorInput()", DebugLevel.CONSTRUCTOR);
     }
 
     /**

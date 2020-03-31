@@ -3,6 +3,7 @@ package persister.driver;
 import persister.util.PersistSvcInput;
 import persister.util.InputParametersI;
 import persister.socket.PersistService;
+import persister.socket.PersistServiceI;
 
 /**
  * @author Akshay Anvekar and Kenneth Fernandes
@@ -25,11 +26,11 @@ public class Driver {
 				inputParamsObj.setOutputFilePath(args[0]);
 			}
 
-			PersistService persistSvcObj = PersistService.getInstance(inputParamsObj.getPersistSvcPortNum(),
-					inputParamsObj.getOutputFilePath());
+			PersistServiceI persistSvcObj = PersistService.getInstance();
 
-			persistSvcObj.initSocketConnection();
-			persistSvcObj.processData();
+			persistSvcObj.initSocketConnection(inputParamsObj.getPersistSvcPortNum(),
+			inputParamsObj.getOutputFilePath());
+			persistSvcObj.processDataRetrieval();
 			persistSvcObj.closeConnection();
 			
 		} catch (Exception e) {
