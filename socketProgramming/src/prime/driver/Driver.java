@@ -55,26 +55,38 @@ public class Driver {
 						"Error: Incorrect value of DEBUG_VALUE. The expected value of NUM_THREADS is 0 and 4.");
 				System.exit(0);
 			}
-
+			// Setting the debug value based on the input
 			MyLogger.setDebugValue(inputParamsObj.getDebugValue());
-
-			FileProcessor fp = new FileProcessor(inputParamsObj.getInputFilePath());
-			PrimeDetectrResultsI results = PrimeDetectrResults.getInstance();
+			/**
+			 * Creating instances of FileProcessor, PrimeDetectrResults, IsPrime
+			 */
+			FileProcessor fileProcessorOnj = new FileProcessor(inputParamsObj.getInputFilePath());
+			PrimeDetectrResultsI primeDetectrResultsObj = PrimeDetectrResults.getInstance();
 			IsPrimeI isPrimeObj = IsPrime.getInstance();
 
-			CreateWorkers workers = CreateWorkers.getInstance(fp, results, isPrimeObj);
+			/**
+			 * Creating instance of worker threads where input parameters are instances of
+			 * FileProcessor, PrimeDetectrResults, IsPrime
+			 */
+			CreateWorkers workers = CreateWorkers.getInstance(fileProcessorOnj, primeDetectrResultsObj, isPrimeObj);
 			workers.startWorkers(inputParamsObj.getNumOfThreads());
 
+			/**
+			 * Sending the result data to the Persister Service Server using socket
+			 */
 			DataSenderI dataSenderClient = DataSender.getInstance();
-
 			dataSenderClient.initSocketConnectn(inputParamsObj.getPersistSvcIPAddr(),
 					inputParamsObj.getPersistSvcPortNum());
 			dataSenderClient.processDataTransfer();
 			dataSenderClient.closeConnectn();
 
-			MyLogger.writeMessage(results.toString(), DebugLevel.RESULTS);
+			/**
+			 * Logging the messages to stdout
+			 */
+			MyLogger.writeMessage(primeDetectrResultsObj.toString(), DebugLevel.RESULTS);
 
-			MyLogger.writeMessage("The sum of all the prime numbers is: " + results.getSumOfPrimeNumbers(),
+			MyLogger.writeMessage(
+					"The sum of all the prime numbers is: " + primeDetectrResultsObj.getSumOfPrimeNumbers(),
 					DebugLevel.NO_OUTPUT);
 
 		} catch (NumberFormatException e) {

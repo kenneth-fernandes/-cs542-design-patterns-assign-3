@@ -7,23 +7,60 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Enumeration;
 import prime.result.PrimeDetectrResults;
+import prime.util.MyLogger;
+import prime.util.MyLogger.DebugLevel;
 
+/**
+ * This class contains methods for implemnting Client Socket by sending data to
+ * the Persister ServiceServer
+ * 
+ * @author Akshay Anvekar and Kenneth Fernandes
+ */
 public class DataSender implements DataSenderI {
-    private Socket socketObj = null;
-    private DataOutputStream outDataStreamObj = null;
-    private InetAddress addrObj = null;
+
+    // Stores the Socket handler of the DataSender client
+    private Socket socketObj;
+
+    // Stores the DataOutputStream handler
+    private DataOutputStream outDataStreamObj;
+
+    // Stores the InetAddress handler that stores IP Address of the Persister
+    // Service Server
+    private InetAddress addrObj;
+
+    // Stores the port number
     private int portNum;
+
+    // Stores the handler of DataSender client
     private static DataSenderI dataSenderObj = new DataSender();
+
+    // Stores the Enumeration object handler of type Integer
     private Enumeration<Integer> enumeratnObj;
 
+    /**
+     * DataSender Constructor
+     */
     private DataSender() {
+        MyLogger.writeMessage("DataSender()", DebugLevel.CONSTRUCTOR);
     }
 
-    public static DataSenderI getInstance()
-            throws NumberFormatException, UnknownHostException {
+    /**
+     * This function returns the single instance of DataSender
+     * 
+     * @return - Instance of DataSender class
+     * @throws NumberFormatException
+     * @throws UnknownHostException
+     */
+    public static DataSenderI getInstance() throws NumberFormatException, UnknownHostException {
         return dataSenderObj;
     }
 
+    /**
+     * This function intilializes the socket connection
+     * 
+     * @param addrObj - InetAddress object handler
+     * @param portNum - Port number of type String
+     */
     public void initSocketConnectn(InetAddress addrObj, int portNum) {
         try {
             socketObj = new Socket(addrObj, portNum);
@@ -36,6 +73,10 @@ public class DataSender implements DataSenderI {
         }
     }
 
+    /**
+     * This function processes sending the data to the Persister Service server
+     * 
+     */
     public void processDataTransfer() {
         enumeratnObj = PrimeDetectrResults.getInstance().getResultVector().elements();
         try {
@@ -49,6 +90,9 @@ public class DataSender implements DataSenderI {
         }
     }
 
+    /**
+     * This function closes the socket connection of the DataSender client
+     */
     public void closeConnectn() {
         try {
             outDataStreamObj.close();
@@ -60,8 +104,8 @@ public class DataSender implements DataSenderI {
 
     @Override
     public String toString() {
-        return "DataSender class data members state: socketObj = " + socketObj+ ", outDataStreamObj =  "
-                + outDataStreamObj + ", addrObj = " + addrObj + ", portNum" + portNum + ", dataSenderObj = "
-                + dataSenderObj + ", enumeratnObj = " + enumeratnObj;
+        return "DataSender class :() socketObj = " + socketObj + ", outDataStreamObj =  " + outDataStreamObj
+                + ", addrObj = " + addrObj + ", portNum" + portNum + ", dataSenderObj = " + dataSenderObj
+                + ", enumeratnObj = " + enumeratnObj + ")";
     }
 }

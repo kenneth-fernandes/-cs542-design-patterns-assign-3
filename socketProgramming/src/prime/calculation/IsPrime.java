@@ -9,12 +9,22 @@ import prime.util.MyLogger.DebugLevel;
  * @author Akshay Anvekar and Kenneth Fernandes
  */
 public class IsPrime implements IsPrimeI {
+
+    // Stores the instance of IsPrime object
     private static IsPrimeI isPrimeObj = new IsPrime();
 
+    /**
+     * IsPrime constructor
+     */
     private IsPrime() {
         MyLogger.writeMessage("IsPrime()", DebugLevel.CONSTRUCTOR);
     }
 
+    /**
+     * This function returns the single instance of IsPrime object of type IsPrimeI
+     * 
+     * @return - Instance of IsPrime object of type IsPrimeI
+     */
     public static IsPrimeI getInstance() {
         return isPrimeObj;
     }
