@@ -2,6 +2,7 @@ package prime.util;
 
 /**
  * The class MyLogger is for implementing the logger
+ * 
  * @author Akshay Anvekar and Kenneth Fernandes
  */
 public class MyLogger
