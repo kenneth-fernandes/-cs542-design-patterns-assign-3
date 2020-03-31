@@ -1,7 +1,7 @@
 package persister.driver;
 
 import persister.util.InputParametersData;
-import persister.util.PersistService;
+import persister.socket.PersistService;
 
 /**
  * @author Akshay Anvekar and Kenneth Fernandes

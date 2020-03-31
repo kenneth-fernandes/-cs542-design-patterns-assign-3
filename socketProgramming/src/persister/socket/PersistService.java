@@ -1,4 +1,4 @@
-package persister.util;
+package persister.socket;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedWriter;
