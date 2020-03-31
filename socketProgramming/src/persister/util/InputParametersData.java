@@ -4,12 +4,12 @@ package persister.util;
  * Class that contains methods to set and retireve the argument passed through
  * command line
  */
-public class InputParametersData {
+public class InputParametersData implements InputParametersI{
     /**
      * Data members of InputParametersData containing input arguments and
      * InputParametersData object
      */
-    private static InputParametersData inputParamsDataObj = new InputParametersData();
+    private static InputParametersI inputParamsObj = new InputParametersData();
 
     private int persistSvcPort;
 
@@ -28,9 +28,9 @@ public class InputParametersData {
      * 
      * @return - Returns the InputParametersData object
      */
-    public static InputParametersData getInstance() {
+    public static InputParametersI getInstance() {
 
-        return inputParamsDataObj;
+        return inputParamsObj;
     }
 
     /**

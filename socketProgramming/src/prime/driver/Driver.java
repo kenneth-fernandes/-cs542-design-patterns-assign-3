@@ -6,6 +6,7 @@ import java.io.IOException;
 import prime.thread.CreateWorkers;
 import prime.util.FileProcessor;
 import prime.util.InputParametersData;
+import prime.util.InputParametersI;
 import prime.calculation.IsPrime;
 import prime.util.MyLogger;
 import prime.result.Results;
@@ -18,7 +19,7 @@ import prime.socket.DataSender;
 public class Driver {
 	public static void main(String[] args) throws InterruptedException {
 		try {
-			InputParametersData inputParamsDataObj = InputParametersData.getInstance();
+			InputParametersI inputParamsObj = InputParametersData.getInstance();
 			/*
 			 * As the build.xml specifies the arguments as argX, in case the argument value
 			 * is not given java takes the default value specified in build.xml. To avoid
@@ -30,39 +31,39 @@ public class Driver {
 				System.exit(0);
 			} else {
 
-				inputParamsDataObj.setInputFilePath(args[0]);
-				inputParamsDataObj.setNumOfThreads(args[1]);
-				inputParamsDataObj.setResultDataCapacity(args[2]);
-				inputParamsDataObj.setPersistSvcIPAddr(args[3]);
-				inputParamsDataObj.setPersistSvcPortNum(args[4]);
-				inputParamsDataObj.setDebugValue(args[5]);
+				inputParamsObj.setInputFilePath(args[0]);
+				inputParamsObj.setNumOfThreads(args[1]);
+				inputParamsObj.setResultDataCapacity(args[2]);
+				inputParamsObj.setPersistSvcIPAddr(args[3]);
+				inputParamsObj.setPersistSvcPortNum(args[4]);
+				inputParamsObj.setDebugValue(args[5]);
 			}
 
 			// To check if the number of threads is between 1 and 5
-			if (!(inputParamsDataObj.getNumOfThreads() >= 1 && inputParamsDataObj.getNumOfThreads() <= 5)) {
+			if (!(inputParamsObj.getNumOfThreads() >= 1 && inputParamsObj.getNumOfThreads() <= 5)) {
 				System.err.println(
 						"Error: Incorrect value of NUM_THREADS. The expected value of NUM_THREADS is between 1 and 5.");
 				System.exit(0);
 			}
 
 			// To check if the debug value is between 0 and 4
-			if (!(inputParamsDataObj.getDebugValue() >= 0 && inputParamsDataObj.getDebugValue() <= 4)) {
+			if (!(inputParamsObj.getDebugValue() >= 0 && inputParamsObj.getDebugValue() <= 4)) {
 				System.err.println(
 						"Error: Incorrect value of DEBUG_VALUE. The expected value of NUM_THREADS is 0 and 4.");
 				System.exit(0);
 			}
 
-			MyLogger.setDebugValue(inputParamsDataObj.getDebugValue());
+			MyLogger.setDebugValue(inputParamsObj.getDebugValue());
 
-			FileProcessor fp = new FileProcessor(inputParamsDataObj.getInputFilePath());
+			FileProcessor fp = new FileProcessor(inputParamsObj.getInputFilePath());
 			Results results = Results.getInstance();
 			IsPrime isPrime = new IsPrime();
 
 			CreateWorkers workers = CreateWorkers.getInstance(fp, results, isPrime);
-			workers.startWorkers(inputParamsDataObj.getNumOfThreads());
+			workers.startWorkers(inputParamsObj.getNumOfThreads());
 
-			DataSender dataSenderClient = DataSender.getInstance(inputParamsDataObj.getPersistSvcIPAddr(),
-					inputParamsDataObj.getPersistSvcPortNum());
+			DataSender dataSenderClient = DataSender.getInstance(inputParamsObj.getPersistSvcIPAddr(),
+					inputParamsObj.getPersistSvcPortNum());
 
 			dataSenderClient.initSocketConnection();
 			dataSenderClient.processData();
