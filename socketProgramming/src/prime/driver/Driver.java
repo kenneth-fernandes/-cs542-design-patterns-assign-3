@@ -3,14 +3,14 @@ package prime.driver;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import prime.util.CreateWorkers;
-import prime.util.DataSender;
+import prime.thread.CreateWorkers;
 import prime.util.FileProcessor;
 import prime.util.InputParametersData;
-import prime.util.IsPrime;
+import prime.calculation.IsPrime;
 import prime.util.MyLogger;
-import prime.util.Results;
+import prime.result.Results;
 import prime.util.MyLogger.DebugLevel;
+import prime.socket.DataSender;
 
 /**
  * @author Akshay Anvekar and Kenneth Fernandes

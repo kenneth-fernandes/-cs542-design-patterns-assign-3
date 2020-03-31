@@ -1,7 +1,11 @@
-package prime.util;
+package prime.thread;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import prime.calculation.IsPrime;
+import prime.result.Results;
+import prime.util.FileProcessor;
 
 /**
  * ThreadPool is a class for implementing the thread pool

@@ -1,7 +1,9 @@
-package prime.util;
+package prime.result;
 
 import java.util.Vector;
 
+import prime.util.InputParametersData;
+import prime.util.MyLogger;
 import prime.util.MyLogger.DebugLevel;
 
 /**

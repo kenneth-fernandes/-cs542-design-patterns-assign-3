@@ -1,6 +1,11 @@
-package prime.util;
+package prime.thread;
 
 import java.io.IOException;
+
+import prime.calculation.IsPrime;
+import prime.result.Results;
+import prime.util.FileProcessor;
+import prime.util.MyLogger;
 import prime.util.MyLogger.DebugLevel;
 
 /**

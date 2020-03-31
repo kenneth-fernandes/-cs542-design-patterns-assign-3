@@ -1,4 +1,4 @@
-package prime.util;
+package prime.socket;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -6,6 +6,8 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Enumeration;
+
+import prime.result.Results;
 
 public class DataSender {
     private Socket socket = null;

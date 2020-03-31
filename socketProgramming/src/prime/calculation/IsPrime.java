@@ -1,5 +1,6 @@
-package prime.util;
+package prime.calculation;
 
+import prime.util.MyLogger;
 import prime.util.MyLogger.DebugLevel;
 
 /**
