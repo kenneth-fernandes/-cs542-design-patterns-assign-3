@@ -42,6 +42,7 @@ public class DataSender implements DataSenderI {
             while (enumeratnObj.hasMoreElements()) {
                 outDataStreamObj.writeUTF(enumeratnObj.nextElement().toString());
             }
+            outDataStreamObj.writeUTF("STOP");
             outDataStreamObj.flush();
         } catch (IOException e) {
             e.printStackTrace();

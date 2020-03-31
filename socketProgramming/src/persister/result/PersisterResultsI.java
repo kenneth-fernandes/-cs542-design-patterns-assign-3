@@ -9,6 +9,4 @@ public interface PersisterResultsI {
 
     public String getStoredPersisterResult();
 
-    public int getStoredResultAvg();
-
 }

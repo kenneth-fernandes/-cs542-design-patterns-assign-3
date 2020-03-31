@@ -17,6 +17,7 @@ public class PrimeDetectrResults implements PrimeDetectrResultsI {
 	private static PrimeDetectrResultsI resultsObj = new PrimeDetectrResults();
 	private Vector<Integer> primeNumsVector;
 	private InputParametersI inputParamsObj = PrimeDetectorInput.getInstance();
+	private int primeNumsSum;
 
 	private PrimeDetectrResults() {
 		MyLogger.writeMessage("Results()", DebugLevel.CONSTRUCTOR);
@@ -38,11 +39,16 @@ public class PrimeDetectrResults implements PrimeDetectrResultsI {
 
 		if (primeNumsVector.size() < inputParamsObj.getResultDataCapacity()) {
 			primeNumsVector.add(primeNum);
+			primeNumsSum += primeNum;
 		}
 	}
 
 	public synchronized Vector<Integer> getResultVector() {
 		return primeNumsVector;
+	}
+
+	public synchronized int getSumOfPrimeNumbers() {
+		return primeNumsSum;
 	}
 
 	@Override
