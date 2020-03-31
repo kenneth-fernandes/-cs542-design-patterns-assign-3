@@ -15,7 +15,7 @@ import java.io.IOException;
  */
 public class FileProcessor
 {
-	private BufferedReader br = null;
+	private BufferedReader br;
 	
 	public FileProcessor(String filePath) throws FileNotFoundException, IOException
 	{

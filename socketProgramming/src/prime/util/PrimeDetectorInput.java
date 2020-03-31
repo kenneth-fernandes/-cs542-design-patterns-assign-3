@@ -6,41 +6,48 @@ import java.net.UnknownHostException;
 import prime.util.MyLogger.DebugLevel;
 
 /**
- * Class that contains methods to set and retireve the argument passed through
+ * Class that contains methods to set and retireve the arguments passed through
  * command line
+ * 
+ * @author Akshay Anvekar and Kenneth Fernandes
  */
 public class PrimeDetectorInput implements InputParametersI {
     /**
-     * Data members of InputParametersData containing input arguments and
-     * InputParametersData object
+     * Data members of PrimeDetectorInput class
      */
+
+    // Stores handler of PrimeDetectorInput object
     private static InputParametersI inputParamsObj = new PrimeDetectorInput();
 
+    // Stores file path of input file
     private String inputFilePath;
 
+    // Stores the count of threads to be used by the application
     private int numOfThreads;
 
+    // Stores the capacity for storing prime result data
     private int resultDataCapacity;
 
+    // Stores the IP Address of the Persister Service
     private InetAddress persistSvcIPAddrObj;
 
+    // Stores the port number of the Persister Service
     private int persistSvcPort;
 
+    // Stores the value used for debug
     private int debugVal;
 
     /**
-     * InputParametersData constructor
-     * 
-     * @throws Exception
+     * PrimeDetectorInput constructor
      */
     private PrimeDetectorInput() {
         MyLogger.writeMessage("PrimeDetectorInput()", DebugLevel.CONSTRUCTOR);
     }
 
     /**
-     * Function that returns the InputParametersI singleton object
+     * Function that returns the single instance of PrimeDetectorInput object
      * 
-     * @return - Returns the InputParametersI object
+     * @return - Returns the PrimeDetectorInput object
      */
     public static InputParametersI getInstance() {
 
@@ -48,7 +55,7 @@ public class PrimeDetectorInput implements InputParametersI {
     }
 
     /**
-     * Function to set Input file path
+     * Function to store the Input file path
      * 
      * @param path
      */
@@ -57,54 +64,54 @@ public class PrimeDetectorInput implements InputParametersI {
     }
 
     /**
-     * Function to get Input file path
+     * Function to retrieve the Input file path
      * 
-     * @return - Input filt path
+     * @return - Input filt path of type String
      */
     public String getInputFilePath() {
         return inputFilePath;
     }
 
     /**
-     * Function to set Number of threads
+     * Function to store the count of threads to be used
      * 
-     * @param path - Number peaks output file path
+     * @param numOfThreadsStr - Count of threads of the type String
      */
     public void setNumOfThreads(String numOfThreadsStr) {
         numOfThreads = Integer.parseInt(numOfThreadsStr);
     }
 
     /**
-     * Function to get Number peaks output file path
+     * Function to retrieve the count of threads
      * 
-     * @return - Number peaks output file path
+     * @return - Count of threads of type int
      */
     public int getNumOfThreads() {
         return numOfThreads;
     }
 
     /**
-     * Function to set Running Average output file path
+     * Function to store the capacity of result data-structure
      * 
-     * @param path - Running Average output file path
+     * @param resultDataCapacityStr - Running Average output file path
      */
     public void setResultDataCapacity(String resultDataCapacityStr) {
         resultDataCapacity = Integer.parseInt(resultDataCapacityStr);
     }
 
     /**
-     * Function to set Running Average output file path
+     * Function to retrieve the capacity of result data-structure
      * 
-     * @return- Running Average output file path
+     * @return- capacity of result data-structure of type int
      */
     public int getResultDataCapacity() {
         return resultDataCapacity;
     }
 
     /**
-     * Function to set Top K Numbers Output file path
+     * Function to set the IP Address of the Persister Service
      * 
-     * @param path - Top K Numbers Output file path
+     * @param path - IP Address of type String
      * @throws UnknownHostException
      */
     public void setPersistSvcIPAddr(String ipAddrStr) throws UnknownHostException {
@@ -112,47 +119,45 @@ public class PrimeDetectorInput implements InputParametersI {
     }
 
     /**
-     * Function to get Top K Numbers Output file path
+     * Function to set the IP Address of the Persister Service
      * 
-     * @return - Top K Numbers Output file path
+     * @return - IP Address of return type InetAddress
      */
     public InetAddress getPersistSvcIPAddr() {
         return persistSvcIPAddrObj;
     }
 
     /**
-     * Function to set Running Average window size
+     * Function to store the port number of the Persister Service
      * 
-     * @param windowSizeStr - Running Average window size
-     * @throws NumberFormatException - Parsing to integer error exception
+     * @param portNumStr - Port number of type String
      */
     public void setPersistSvcPortNum(String portNumStr) {
         persistSvcPort = Integer.parseInt(portNumStr);
     }
 
     /**
-     * Function to get Running Average window size
+     * Function to retrieve the port number of the Persister Service
      * 
-     * @return - Running Average window size
+     * @return - Port number of type int
      */
     public int getPersistSvcPortNum() {
         return persistSvcPort;
     }
 
     /**
-     * Function to set the K value for Top K Numbers
+     * Function to store the value used for debug
      * 
-     * @param kValueStr - K value for Top K Numbers of type string
-     * @throws NumberFormatException - Parsing to integer error exception
+     * @param debugValStr - debug value of type String
      */
     public void setDebugValue(String debugValStr) {
         debugVal = Integer.parseInt(debugValStr);
     }
 
     /**
-     * Function to get the K value for Top K Numbers
+     * Function to retrieve the value used for debug
      * 
-     * @return - K value for Top K Numbers
+     * @return - debug value of type int
      */
     public int getDebugValue() {
         return debugVal;
