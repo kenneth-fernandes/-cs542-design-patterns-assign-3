@@ -1,6 +1,6 @@
 package persister.driver;
 
-import persister.util.InputParametersData;
+import persister.util.PersistSvcInput;
 import persister.util.InputParametersI;
 import persister.socket.PersistService;
 
@@ -10,7 +10,7 @@ import persister.socket.PersistService;
 public class Driver {
 	public static void main(String[] args) throws InterruptedException {
 		try {
-			InputParametersI inputParamsObj = InputParametersData.getInstance();
+			InputParametersI inputParamsObj = PersistSvcInput.getInstance();
 			
 			/*
 			 * As the build.xml specifies the arguments as argX, in case the argument value

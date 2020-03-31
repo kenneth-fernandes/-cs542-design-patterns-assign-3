@@ -2,9 +2,10 @@ package prime.result;
 
 import java.util.Vector;
 
-import prime.util.InputParametersData;
+
 import prime.util.InputParametersI;
 import prime.util.MyLogger;
+import prime.util.PrimeDetectorInput;
 import prime.util.MyLogger.DebugLevel;
 
 /**
@@ -16,7 +17,7 @@ import prime.util.MyLogger.DebugLevel;
 public class Results {
 	private static Results resultsObj = new Results();
 	private Vector<Integer> primeNumsVector;
-	private InputParametersI inputParamsObj = InputParametersData.getInstance();
+	private InputParametersI inputParamsObj = PrimeDetectorInput.getInstance();
 
 	private Results() {
 		MyLogger.writeMessage("Results()", DebugLevel.CONSTRUCTOR);

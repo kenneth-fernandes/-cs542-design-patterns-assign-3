@@ -5,10 +5,10 @@ import java.io.IOException;
 
 import prime.thread.CreateWorkers;
 import prime.util.FileProcessor;
-import prime.util.InputParametersData;
 import prime.util.InputParametersI;
 import prime.calculation.IsPrime;
 import prime.util.MyLogger;
+import prime.util.PrimeDetectorInput;
 import prime.result.Results;
 import prime.util.MyLogger.DebugLevel;
 import prime.socket.DataSender;
@@ -19,7 +19,7 @@ import prime.socket.DataSender;
 public class Driver {
 	public static void main(String[] args) throws InterruptedException {
 		try {
-			InputParametersI inputParamsObj = InputParametersData.getInstance();
+			InputParametersI inputParamsObj = PrimeDetectorInput.getInstance();
 			/*
 			 * As the build.xml specifies the arguments as argX, in case the argument value
 			 * is not given java takes the default value specified in build.xml. To avoid

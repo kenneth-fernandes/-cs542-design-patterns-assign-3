@@ -7,12 +7,12 @@ import java.net.UnknownHostException;
  * Class that contains methods to set and retireve the argument passed through
  * command line
  */
-public class InputParametersData implements InputParametersI {
+public class PrimeDetectorInput implements InputParametersI {
     /**
      * Data members of InputParametersData containing input arguments and
      * InputParametersData object
      */
-    private static InputParametersI inputParamsObj = new InputParametersData();
+    private static InputParametersI inputParamsObj = new PrimeDetectorInput();
 
     private String inputFilePath;
 
@@ -31,7 +31,7 @@ public class InputParametersData implements InputParametersI {
      * 
      * @throws Exception
      */
-    private InputParametersData() {
+    private PrimeDetectorInput() {
     }
 
     /**
