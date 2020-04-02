@@ -6,6 +6,8 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Enumeration;
+import java.util.Vector;
+
 import prime.result.PrimeDetectrResults;
 import prime.util.MyLogger;
 import prime.util.MyLogger.DebugLevel;
@@ -16,7 +18,7 @@ import prime.util.MyLogger.DebugLevel;
  * 
  * @author Akshay Anvekar and Kenneth Fernandes
  */
-public class DataSender implements DataSenderI {
+public class DataSender implements Runnable {
 
     // Stores the Socket handler of the DataSender client
     private Socket socketObj;
@@ -31,17 +33,27 @@ public class DataSender implements DataSenderI {
     // Stores the port number
     private int portNum;
 
+    // Stores the capacity
+    private int capacity;
+
     // Stores the handler of DataSender client
-    private static DataSenderI dataSenderObj = new DataSender();
+    // private static DataSenderI dataSenderObj = new DataSender();
 
     // Stores the Enumeration object handler of type Integer
     private Enumeration<Integer> enumeratnObj;
 
+    // Stores the results of prime numbers
+    private Vector<Integer> primeNumsVector;
+
+    // Stores the status of data sending
+    private boolean isFileProcessCompleted = false;
+
     /**
      * DataSender Constructor
      */
-    private DataSender() {
+    public DataSender(InetAddress addrObj, int portNum, int capacity) {
         MyLogger.writeMessage("DataSender()", DebugLevel.CONSTRUCTOR);
+        initSocketConnectn(addrObj, portNum, capacity);
     }
 
     /**
@@ -51,9 +63,10 @@ public class DataSender implements DataSenderI {
      * @throws NumberFormatException
      * @throws UnknownHostException
      */
-    public static DataSenderI getInstance() throws NumberFormatException, UnknownHostException {
-        return dataSenderObj;
-    }
+    /*
+     * public static DataSenderI getInstance() throws NumberFormatException,
+     * UnknownHostException { return dataSenderObj; }
+     */
 
     /**
      * This function intilializes the socket connection
@@ -61,7 +74,7 @@ public class DataSender implements DataSenderI {
      * @param addrObj - InetAddress object handler
      * @param portNum - Port number of type String
      */
-    public void initSocketConnectn(InetAddress addrObj, int portNum) {
+    private synchronized void initSocketConnectn(InetAddress addrObj, int portNum, int capacity) {
         try {
             socketObj = new Socket(addrObj, portNum);
             outDataStreamObj = new DataOutputStream(socketObj.getOutputStream());
@@ -73,17 +86,35 @@ public class DataSender implements DataSenderI {
         }
     }
 
+    @Override
+    public void run() {
+        processDataTransfer();
+        if (isFileProcessCompleted) {
+            closeConnectn();
+        }
+    }
+
     /**
      * This function processes sending the data to the Persister Service server
      * 
      */
-    public void processDataTransfer() {
-        enumeratnObj = PrimeDetectrResults.getInstance().getResultVector().elements();
-        try {
-            while (enumeratnObj.hasMoreElements()) {
-                outDataStreamObj.writeUTF(enumeratnObj.nextElement().toString());
+    public synchronized void processDataTransfer() {
+        primeNumsVector = PrimeDetectrResults.getInstance().getResultVector();
+        System.out.println("processDataTransfer() - DataSender. - Notify()");
+
+        while (primeNumsVector.size() == 0) {
+            try {
+                System.out.println("processDataTransfer() - DataSender. - wait()");
+                wait();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            outDataStreamObj.writeUTF("STOP");
+        }
+        notifyAll();
+        try {
+            while (primeNumsVector.size() != 0) {
+                outDataStreamObj.writeUTF(primeNumsVector.remove(0).toString());
+            }
             outDataStreamObj.flush();
         } catch (IOException e) {
             e.printStackTrace();
@@ -93,8 +124,9 @@ public class DataSender implements DataSenderI {
     /**
      * This function closes the socket connection of the DataSender client
      */
-    public void closeConnectn() {
+    public synchronized void closeConnectn() {
         try {
+            System.out.println("Close connectn - Data Sender");
             outDataStreamObj.close();
             socketObj.close();
         } catch (IOException e) {
@@ -102,10 +134,14 @@ public class DataSender implements DataSenderI {
         }
     }
 
+    public synchronized void setFileProcessFlag(boolean flag) {
+        isFileProcessCompleted = flag;
+    }
+
     @Override
     public String toString() {
         return "DataSender class :() socketObj = " + socketObj + ", outDataStreamObj =  " + outDataStreamObj
-                + ", addrObj = " + addrObj + ", portNum" + portNum + ", dataSenderObj = " + dataSenderObj
-                + ", enumeratnObj = " + enumeratnObj + ")";
+                + ", addrObj = " + addrObj + ", portNum" + portNum + ", enumeratnObj = " + enumeratnObj + ")";
     }
+
 }

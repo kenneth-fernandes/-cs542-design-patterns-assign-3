@@ -79,8 +79,13 @@ public class PersistService implements PersistServiceI {
     public void initSocketConnection(int inputDataPortNum, String filePath) throws IOException {
 
         server = new ServerSocket(inputDataPortNum);
-        outputFilePath = filePath;
+        System.out.println("Persister Service Started....");
+        System.out.println("Waiting for PrimeDetector client to connect....");
+        socket = server.accept();
+
         inputDataStrmObj = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
+        outputFilePath = filePath;
+
     }
 
     /**
@@ -88,11 +93,13 @@ public class PersistService implements PersistServiceI {
      */
     public void processDataRetrieval() {
         try {
-            socket = server.accept();
 
-            while (resultDataStr.equals("STOP") || inputDataStrmObj.available() > 0) {
-                resultDataStr = inputDataStrmObj.readUTF();
-                persistrResultsObj.storeResultData(resultDataStr);
+            while (!resultDataStr.equals("STOP")) {
+                if (inputDataStrmObj.available() > 0) {
+                    resultDataStr = inputDataStrmObj.readUTF();
+                    persistrResultsObj.storeResultData(resultDataStr);
+                    System.out.print(persistrResultsObj.getStoredPersisterResult());
+                }
             }
 
             persistToFileObj.openFile(outputFilePath);
@@ -100,6 +107,8 @@ public class PersistService implements PersistServiceI {
             persistToFileObj.closeFile();
 
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }

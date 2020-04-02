@@ -13,7 +13,7 @@ public interface DataSenderI {
      * @param addrObj - InetAddress object handler
      * @param portNum - Port number of type String
      */
-    public void initSocketConnectn(InetAddress addrObj, int portNum);
+   // public void initSocketConnectn(InetAddress addrObj, int portNum, int capacity);
 
     /**
      * This function processes sending the data to the Persister Service server

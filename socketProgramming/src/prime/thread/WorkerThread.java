@@ -1,11 +1,14 @@
 package prime.thread;
 
 import java.io.IOException;
+import java.util.List;
 
+import prime.util.InputParametersI;
 import prime.calculation.IsPrimeI;
 import prime.result.PrimeDetectrResultsI;
 import prime.util.FileProcessor;
 import prime.util.MyLogger;
+import prime.util.PrimeDetectorInput;
 import prime.util.MyLogger.DebugLevel;
 
 /**
@@ -16,6 +19,7 @@ import prime.util.MyLogger.DebugLevel;
  * @author Akshay Anvekar and Kenneth Fernandes
  */
 public class WorkerThread implements Runnable {
+
 	// Stores the handler of File Procssor object
 	private FileProcessor fileProcessorObj;
 
@@ -24,6 +28,8 @@ public class WorkerThread implements Runnable {
 
 	// Stores the handler of PrimeDetectrResults class
 	private PrimeDetectrResultsI primeDetectrResultsObj;
+
+	private InputParametersI inputParamObj = PrimeDetectorInput.getInstance();
 
 	public WorkerThread(FileProcessor fileProcessorInObj, IsPrimeI isPrimeInObj,
 			PrimeDetectrResultsI primeDetectrResultsInObj) {
@@ -47,12 +53,31 @@ public class WorkerThread implements Runnable {
 			 * This reads the file line by line until the end of the file is reached
 			 */
 			while ((line = fileProcessorObj.readLine()) != null) {
-				// Check if the number is prime
-				boolean prime = isPrimeObj.checkNum(Integer.parseInt(line));
 
-				if (prime)
-					primeDetectrResultsObj.addPrimeNum(Integer.parseInt(line));
+				// Check if the number is prime
+				boolean prime = false;
+
+				prime = isPrimeObj.checkNum(Integer.parseInt(line));
+
+				if (prime) {
+					synchronized (primeDetectrResultsObj) {
+						while (primeDetectrResultsObj.getResultVectorSize() == inputParamObj.getResultDataCapacity()) {
+
+							try {
+								System.out.println("run() - Worker thread. - wait() - Size: "
+										+ primeDetectrResultsObj.getResultVectorSize());
+								wait();
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						}
+						notifyAll();
+						primeDetectrResultsObj.addPrimeNum(Integer.parseInt(line));
+					}
+
+				}
 			}
+			primeDetectrResultsObj.addTerminationMsg("STOP");
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.exit(1);
@@ -61,7 +86,7 @@ public class WorkerThread implements Runnable {
 
 	@Override
 	public String toString() {
-		return "This is a WorkerThread (fp=" + fileProcessorObj + ", results=" + primeDetectrResultsObj + ", isPrime="
-				+ isPrimeObj + ")";
+		return "This is a WorkerThread (fileProcessorObj =" + fileProcessorObj + ", primeDetectrResultsObj ="
+				+ primeDetectrResultsObj + ", isPrimeObj =" + isPrimeObj + ")";
 	}
 }

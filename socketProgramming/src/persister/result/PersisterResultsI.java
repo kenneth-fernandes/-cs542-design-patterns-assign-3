@@ -10,7 +10,7 @@ public interface PersisterResultsI {
      * 
      * @param result - The data sent by the Data Sender client
      */
-    public void storeResultData(String result);
+    public void storeResultData(String result) throws InterruptedException;
 
     /**
      * This function returns the stored results that would be peristed to the output

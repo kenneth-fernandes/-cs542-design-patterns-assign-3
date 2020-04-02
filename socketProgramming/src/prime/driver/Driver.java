@@ -60,25 +60,27 @@ public class Driver {
 			/**
 			 * Creating instances of FileProcessor, PrimeDetectrResults, IsPrime
 			 */
-			FileProcessor fileProcessorOnj = new FileProcessor(inputParamsObj.getInputFilePath());
-			PrimeDetectrResultsI primeDetectrResultsObj = PrimeDetectrResults.getInstance();
+			FileProcessor fileProcessorObj = new FileProcessor(inputParamsObj.getInputFilePath());
+			PrimeDetectrResultsI primeDetectrResultsObj = PrimeDetectrResults
+					.getInstance();
 			IsPrimeI isPrimeObj = IsPrime.getInstance();
 
 			/**
 			 * Creating instance of worker threads where input parameters are instances of
 			 * FileProcessor, PrimeDetectrResults, IsPrime
 			 */
-			CreateWorkers workers = CreateWorkers.getInstance(fileProcessorOnj, primeDetectrResultsObj, isPrimeObj);
+			CreateWorkers workers = CreateWorkers.getInstance(fileProcessorObj, primeDetectrResultsObj, isPrimeObj);
 			workers.startWorkers(inputParamsObj.getNumOfThreads());
 
 			/**
 			 * Sending the result data to the Persister Service Server using socket
 			 */
-			DataSenderI dataSenderClient = DataSender.getInstance();
-			dataSenderClient.initSocketConnectn(inputParamsObj.getPersistSvcIPAddr(),
-					inputParamsObj.getPersistSvcPortNum());
-			dataSenderClient.processDataTransfer();
-			dataSenderClient.closeConnectn();
+			// InputParametersI inputParamsObj = PrimeDetectorInput.getInstance();
+			/*DataSender dataSenderClient = new DataSender(inputParamsObj.getPersistSvcIPAddr(),
+					inputParamsObj.getPersistSvcPortNum(), inputParamsObj.getResultDataCapacity());*/
+			// dataSenderClient.initSocketConnectn();
+			
+			// dataSenderClient.closeConnectn();
 
 			/**
 			 * Logging the messages to stdout

@@ -34,16 +34,17 @@ public class ThreadPool {
 	 * 
 	 * @param The numOfThreads is a paramter with value of number of thread in a
 	 *            thread pool
-	 * @param The FileProcessor object "fp" for performing file operations
-	 * @param The Results object "results" for storing the prime numbers
-	 * @param The IsPrime object "isPrime" for checking if a number is prime
+	 * @param The FileProcessor object "fileProcessorObj" for performing file operations
+	 * @param The Results object "primeDetectrResultsObj" for storing the prime numbers
+	 * @param The IsPrime object "isPrimeObj" for checking if a number is prime
 	 */
-	public static void createThreads(int numOfThreads, FileProcessor fp, PrimeDetectrResultsI results, IsPrimeI isPrimeObj) {
+	public static void createThreads(int numOfThreads, FileProcessor fileProcessorObj,
+			PrimeDetectrResultsI primeDetectrResultsObj, IsPrimeI isPrimeObj) {
 		threadCount = numOfThreads;
 		threadList = new ArrayList<Runnable>();
 
 		for (int i = 0; i < numOfThreads; i++) {
-			addThread(new Thread(new WorkerThread(fp, isPrimeObj, results)));
+			addThread(new Thread(new WorkerThread(fileProcessorObj, isPrimeObj, primeDetectrResultsObj)));
 		}
 	}
 
@@ -79,6 +80,16 @@ public class ThreadPool {
 	 */
 	public int idleThreads() {
 		return threadList.size();
+	}
+
+
+	/**
+	 * This is a Function for the list of threads.
+	 * 
+	 * @return Returns the the list of threads of type List<Runnable>.
+	 */
+	public static List<Runnable> getThreadLst(){
+		return threadList;
 	}
 
 	@Override

@@ -2,6 +2,7 @@ package prime.result;
 
 import java.util.Vector;
 
+import prime.socket.DataSender;
 import prime.util.InputParametersI;
 import prime.util.MyLogger;
 import prime.util.PrimeDetectorInput;
@@ -27,12 +28,23 @@ public class PrimeDetectrResults implements PrimeDetectrResultsI {
 	// Stores the summation of prime numbers
 	private int primeNumsSum;
 
+	// Stores the flag if file read is complete
+	private String stopMsg = "";
+
+	private static Thread dataSenderThread;
+
+	private boolean isDataSndrThrdCreated = false;
+
+	private DataSender dataSenderObj;
+
 	/**
 	 * PrimeDetectrResults constructor
 	 */
 	private PrimeDetectrResults() {
+
 		MyLogger.writeMessage("PrimeDetectrResults()", DebugLevel.CONSTRUCTOR);
 		primeNumsVector = new Vector<>();
+
 	}
 
 	/**
@@ -57,6 +69,11 @@ public class PrimeDetectrResults implements PrimeDetectrResultsI {
 		if (primeNumsVector.size() < inputParamsObj.getResultDataCapacity()) {
 			primeNumsVector.add(primeNum);
 			primeNumsSum += primeNum;
+			initDataSndrThread();
+		}
+
+		if (stopMsg.equals("STOP")) {
+			dataSenderObj.setFileProcessFlag(true);
 		}
 	}
 
@@ -80,8 +97,54 @@ public class PrimeDetectrResults implements PrimeDetectrResultsI {
 		return primeNumsSum;
 	}
 
+	/**
+	 * This function that sets a termination flag to "true"
+	 */
+	public synchronized void addTerminationMsg(String message) {
+		stopMsg = message;
+
+	}
+
+	/**
+	 * This function returns the size of the result vector for storing prime numbers
+	 * 
+	 * @return - the size of the result vector for storing prime numbers of type int
+	 */
+	public synchronized int getResultVectorSize() {
+		return primeNumsVector.size();
+	}
+
+	/**
+	 * This function checks if the termination message is set
+	 * 
+	 * @param message - The message used for termination
+	 * @return - True/False if message is set
+	 */
+	public synchronized boolean isTerminationMsgSet(String message) {
+		return stopMsg.equals(message);
+	}
+
+	/**
+	 * This function initialized the DataSender thread and starts the same.
+	 */
+	public synchronized void initDataSndrThread() {
+		dataSenderObj = new DataSender(inputParamsObj.getPersistSvcIPAddr(), inputParamsObj.getPersistSvcPortNum(),
+				inputParamsObj.getResultDataCapacity());
+		dataSenderThread = new Thread(dataSenderObj);
+		if (!isDataSndrThrdCreated) {
+			try {
+				((Thread) dataSenderThread).start();
+				isDataSndrThrdCreated = true;
+				System.out.println(" PrimeDetectrResultsI getInstance - after thread start()");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
 	@Override
 	public String toString() {
 		return "Results: " + primeNumsVector.toString();
 	}
+
 }

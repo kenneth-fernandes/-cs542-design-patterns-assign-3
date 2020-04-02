@@ -52,4 +52,9 @@ public class PersisterResults implements PersisterResultsI {
     public String getStoredPersisterResult() {
         return persisterResult;
     }
+
+    @Override
+    public String toString() {
+        return "PersisterResults : " + persisterResult;
+    }
 }
