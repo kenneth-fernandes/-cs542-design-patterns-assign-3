@@ -25,7 +25,7 @@ public class FileProcessor implements FileProcessorI {
 	 * @throws IOException
 	 */
 	public FileProcessor(String filePath) throws FileNotFoundException, IOException {
-		MyLogger.writeMessage("FileProcessor()", DebugLevel.CONSTRUCTOR);
+		MyLogger.writeMessage("\nFileProcessor()", DebugLevel.CONSTRUCTOR);
 		try {
 			br = new BufferedReader(new FileReader(filePath));
 		} catch (FileNotFoundException e) {

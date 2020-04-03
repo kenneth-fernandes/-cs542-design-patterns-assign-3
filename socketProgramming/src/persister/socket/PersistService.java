@@ -52,7 +52,7 @@ public class PersistService implements ServerI {
      * PersistService constructor
      */
     private PersistService() {
-        MyLogger.writeMessage("PersistService()", DebugLevel.CONSTRUCTOR);
+        MyLogger.writeMessage("\n\nPersistService()", DebugLevel.CONSTRUCTOR);
         resultDataStr = "";
         outputFilePath = "";
         persistrResultsObj = PersisterResults.getInstance();
@@ -60,8 +60,7 @@ public class PersistService implements ServerI {
     }
 
     /**
-     * Yhis function returns the single instance of PersistService of type
-     * ServerI
+     * Yhis function returns the single instance of PersistService of type ServerI
      * 
      * @return - Instance of PersistService of type ServerI
      */
@@ -79,10 +78,9 @@ public class PersistService implements ServerI {
     public void initSocketConnection(int inputDataPortNum, String filePath) throws IOException {
 
         server = new ServerSocket(inputDataPortNum);
-        System.out.println("Persister Service Started....");
-        System.out.println("Waiting for PrimeDetector client to connect....");
+        System.out.println("\nPersister Service Started....");
+        System.out.println("\nWaiting for client to connect....");
         socket = server.accept();
-
         inputDataStrmObj = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
         outputFilePath = filePath;
 
@@ -98,6 +96,8 @@ public class PersistService implements ServerI {
                     resultDataStr = inputDataStrmObj.readUTF();
                     if (resultDataStr.equals("STOP")) {
                         break;
+                    } else {
+                        System.out.println("\nPersister Service: Data Received from Client : " + resultDataStr);
                     }
                     persistrResultsObj.storeResultData(resultDataStr);
                 }

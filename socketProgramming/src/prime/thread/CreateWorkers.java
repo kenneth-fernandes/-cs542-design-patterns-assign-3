@@ -28,7 +28,7 @@ public class CreateWorkers {
 	private ResultsI primeDetectrResultsObj;
 
 	private CreateWorkers() {
-		MyLogger.writeMessage("CreateWorkers()", DebugLevel.CONSTRUCTOR);
+		MyLogger.writeMessage("\nCreateWorkers()", DebugLevel.CONSTRUCTOR);
 	}
 
 	/**

@@ -53,9 +53,7 @@ public class DataSender implements Runnable, ClientI {
      * DataSender Constructor
      */
     private DataSender() {
-        MyLogger.writeMessage("DataSender()", DebugLevel.CONSTRUCTOR);
-
-        System.out.print("\nDataSender() constructor\n");
+        MyLogger.writeMessage("\nDataSender()", DebugLevel.CONSTRUCTOR);
 
         initSocketConnectn(inputParamObj.getPersistSvcIPAddr(), inputParamObj.getPersistSvcPortNum());
 
@@ -107,15 +105,10 @@ public class DataSender implements Runnable, ClientI {
         primeNumsVector = PrimeDetectrResults.getInstance().getResultVector();
         synchronized (primeNumsVector) {
             while (true) {
-
-                System.out.println("While true processDataTransfer()");
                 try {
 
                     while (primeNumsVector.size() == 0) {
                         try {
-                            System.out.println(
-                                    "\nData Sender - processDataTransfer() - wait()." + isFileProcessCompleted);
-
                             primeNumsVector.wait();
                         } catch (InterruptedException e) {
                             e.printStackTrace();
@@ -124,10 +117,10 @@ public class DataSender implements Runnable, ClientI {
 
                     primeNumsVector.notifyAll();
                     while (primeNumsVector.size() != 0) {
-                        System.out.println(Thread.currentThread().getName() + " Thread - Element - "
-                                + primeNumsVector.get(0).toString());
-                        String s = primeNumsVector.remove(0).toString();
-                        outDataStreamObj.writeUTF(s);
+
+                        String data = primeNumsVector.remove(0).toString();
+                        outDataStreamObj.writeUTF(data);
+                        System.out.println("\nDataSender Service: Data Sent to the server - " + data);
                         outDataStreamObj.flush();
                     }
                     if (isFileProcessCompleted) {
@@ -149,7 +142,6 @@ public class DataSender implements Runnable, ClientI {
      */
     public synchronized void closeConnectn() {
         try {
-            System.out.println("Close connectn - Data Sender");
             outDataStreamObj.close();
             socketObj.close();
         } catch (IOException e) {

@@ -20,7 +20,7 @@ public class PersisterResults implements PersisterResultsI {
      * PersisterResults constructor
      */
     private PersisterResults() {
-        MyLogger.writeMessage("PersisterResults()", DebugLevel.CONSTRUCTOR);
+        MyLogger.writeMessage("\nPersisterResults()", DebugLevel.CONSTRUCTOR);
         persisterResult = "";
     }
 

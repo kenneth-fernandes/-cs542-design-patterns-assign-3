@@ -35,7 +35,7 @@ public class WorkerThread implements Runnable {
 	 */
 	public WorkerThread(FileProcessorI fileProcessorInObj, IsPrimeI isPrimeInObj,
 			ResultsI primeDetectrResultsInObj) {
-		MyLogger.writeMessage("WorkerThread()", DebugLevel.CONSTRUCTOR);
+		MyLogger.writeMessage("\nWorkerThread()", DebugLevel.CONSTRUCTOR);
 		this.fileProcessorObj = fileProcessorInObj;
 		this.isPrimeObj = isPrimeInObj;
 		this.primeDetectrResultsObj = primeDetectrResultsInObj;
@@ -48,7 +48,7 @@ public class WorkerThread implements Runnable {
 	 */
 	@Override
 	public void run() {
-		MyLogger.writeMessage("run()", DebugLevel.THREAD_RUN);
+		MyLogger.writeMessage("\nrun()", DebugLevel.THREAD_RUN);
 		try {
 			String line = null;
 			/*

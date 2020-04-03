@@ -32,18 +32,24 @@ public class PrimeDetectrResults implements ResultsI {
 	// Stores the flag if file read is complete
 	private String stopMsg;
 
+	// Stores the thread for DataSender service
 	private static Thread dataSenderThread;
 
+	// Stores the boolean value to check is DataSender thread is created or not
 	private boolean isDataSndrThrdCreated = false;
 
+	// Stores the DataSender object of type ClientI
 	private ClientI dataSenderObj;
+
+	// Stores the result that of prime numbers in a sting format
+	private String primeResultStr = "";
 
 	/**
 	 * PrimeDetectrResults constructor
 	 */
 	private PrimeDetectrResults() {
 
-		MyLogger.writeMessage("PrimeDetectrResults()", DebugLevel.CONSTRUCTOR);
+		MyLogger.writeMessage("\nPrimeDetectrResults()", DebugLevel.CONSTRUCTOR);
 		stopMsg = "";
 		primeNumsVector = new Vector<>();
 
@@ -65,11 +71,11 @@ public class PrimeDetectrResults implements ResultsI {
 	 * @param primeNo - The prime number to be added to the list
 	 */
 	public void addPrimeNum(int primeNum) {
-		MyLogger.writeMessage("addPrimeNum()", DebugLevel.RESULTS_ADDED);
+		MyLogger.writeMessage("\naddPrimeNum()", DebugLevel.RESULTS_ADDED);
 		synchronized (primeNumsVector) {
 			while (primeNumsVector.size() == inputParamsObj.getResultDataCapacity()) {
 				try {
-					System.out.print("\nData PrimeDetctResult - addPrimeNum() - wait().");
+
 					primeNumsVector.wait();
 				} catch (InterruptedException e) {
 					e.printStackTrace();
@@ -83,10 +89,6 @@ public class PrimeDetectrResults implements ResultsI {
 
 				primeNumsVector.notifyAll();
 				initDataSndrThread();
-				if (stopMsg.equals("STOP")) {
-					System.out.println("Setting flag  of FileProcess : " + true);
-
-				}
 			}
 
 		}

@@ -30,7 +30,7 @@ public class PrimesDataFilePersister implements FilePersisterI {
      * PersistToFile constructor
      */
     private PrimesDataFilePersister() {
-        MyLogger.writeMessage("PersistToFile()", DebugLevel.CONSTRUCTOR);
+        MyLogger.writeMessage("\nPersistToFile()", DebugLevel.CONSTRUCTOR);
 
     }
 

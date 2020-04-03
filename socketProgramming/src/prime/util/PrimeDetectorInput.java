@@ -41,7 +41,7 @@ public class PrimeDetectorInput implements InputParametersI {
      * PrimeDetectorInput constructor
      */
     private PrimeDetectorInput() {
-        MyLogger.writeMessage("PrimeDetectorInput()", DebugLevel.CONSTRUCTOR);
+        MyLogger.writeMessage("\nPrimeDetectorInput()", DebugLevel.CONSTRUCTOR);
     }
 
     /**
