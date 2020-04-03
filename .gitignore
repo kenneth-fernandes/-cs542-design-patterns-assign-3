@@ -6,3 +6,4 @@
 # The double star "**" in the beginning is to make sure that BUILD/ directory is ignored
 # 	regardless of the directory in which it is in.
 **/BUILD/
+/bin/

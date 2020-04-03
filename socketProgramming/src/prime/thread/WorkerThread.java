@@ -40,9 +40,10 @@ public class WorkerThread implements Runnable {
 	}
 
 	/**
-	 * This is a function which Invoke a method in the FileProcessor to retrieve one
-	 * line, as string from the input file and Check if it is a prime number. Also
-	 * stores the prime number in a data structure in the Results instance
+	 * This is a function which Invoke a method in the FileProcessor to retrieve
+	 * one line, as string from the input file and Check if it is a prime
+	 * number. Also stores the prime number in a data structure in the Results
+	 * instance
 	 */
 	@Override
 	public void run() {
@@ -50,7 +51,8 @@ public class WorkerThread implements Runnable {
 		try {
 			String line = null;
 			/*
-			 * This reads the file line by line until the end of the file is reached
+			 * This reads the file line by line until the end of the file is
+			 * reached
 			 */
 			synchronized (this) {
 				while ((line = fileProcessorObj.readLine()) != null) {
