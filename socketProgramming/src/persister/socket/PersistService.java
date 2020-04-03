@@ -93,22 +93,20 @@ public class PersistService implements PersistServiceI {
      */
     public void processDataRetrieval() {
         try {
-
-            while (!resultDataStr.equals("STOP")) {
+            while (true) {
                 if (inputDataStrmObj.available() > 0) {
                     resultDataStr = inputDataStrmObj.readUTF();
+                    if (resultDataStr.equals("STOP")) {
+                        break;
+                    }
                     persistrResultsObj.storeResultData(resultDataStr);
-                    System.out.println(resultDataStr);
                 }
             }
-
             persistToFileObj.openFile(outputFilePath);
             persistToFileObj.writeLine(persistrResultsObj.getStoredPersisterResult());
             persistToFileObj.closeFile();
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
     }

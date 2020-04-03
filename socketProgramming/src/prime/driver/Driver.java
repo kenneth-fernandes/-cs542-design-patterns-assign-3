@@ -10,11 +10,9 @@ import prime.calculation.IsPrime;
 import prime.calculation.IsPrimeI;
 import prime.util.MyLogger;
 import prime.util.PrimeDetectorInput;
-import prime.result.PrimeDetectrResultsI;
+import prime.result.ResultsI;
 import prime.result.PrimeDetectrResults;
 import prime.util.MyLogger.DebugLevel;
-import prime.socket.DataSender;
-import prime.socket.DataSenderI;
 
 /**
  * @author Akshay Anvekar and Kenneth Fernandes
@@ -61,7 +59,7 @@ public class Driver {
 			 * Creating instances of FileProcessor, PrimeDetectrResults, IsPrime
 			 */
 			FileProcessor fileProcessorObj = new FileProcessor(inputParamsObj.getInputFilePath());
-			PrimeDetectrResultsI primeDetectrResultsObj = PrimeDetectrResults
+			ResultsI primeDetectrResultsObj = PrimeDetectrResults
 					.getInstance();
 			IsPrimeI isPrimeObj = IsPrime.getInstance();
 
@@ -71,16 +69,6 @@ public class Driver {
 			 */
 			CreateWorkers workers = CreateWorkers.getInstance(fileProcessorObj, primeDetectrResultsObj, isPrimeObj);
 			workers.startWorkers(inputParamsObj.getNumOfThreads());
-
-			/**
-			 * Sending the result data to the Persister Service Server using socket
-			 */
-			// InputParametersI inputParamsObj = PrimeDetectorInput.getInstance();
-			/*DataSender dataSenderClient = new DataSender(inputParamsObj.getPersistSvcIPAddr(),
-					inputParamsObj.getPersistSvcPortNum(), inputParamsObj.getResultDataCapacity());*/
-			// dataSenderClient.initSocketConnectn();
-			
-			// dataSenderClient.closeConnectn();
 
 			/**
 			 * Logging the messages to stdout

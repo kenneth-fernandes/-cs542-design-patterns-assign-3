@@ -1,14 +1,11 @@
 package prime.thread;
 
 import java.io.IOException;
-import java.util.List;
 
-import prime.util.InputParametersI;
 import prime.calculation.IsPrimeI;
-import prime.result.PrimeDetectrResultsI;
+import prime.result.ResultsI;
 import prime.util.FileProcessor;
 import prime.util.MyLogger;
-import prime.util.PrimeDetectorInput;
 import prime.util.MyLogger.DebugLevel;
 
 /**
@@ -27,12 +24,17 @@ public class WorkerThread implements Runnable {
 	private IsPrimeI isPrimeObj;
 
 	// Stores the handler of PrimeDetectrResults class
-	private PrimeDetectrResultsI primeDetectrResultsObj;
+	private ResultsI primeDetectrResultsObj;
 
-	private InputParametersI inputParamObj = PrimeDetectorInput.getInstance();
-
+	/**
+	 * WorkerThread constructor
+	 * 
+	 * @param fileProcessorInObj - FileProcessor Object
+	 * @param isPrimeInObj - IsPrime instance of type IsPrimeI
+	 * @param primeDetectrResultsInObj - PrimeDetectrResults instance of type ResultsI
+	 */
 	public WorkerThread(FileProcessor fileProcessorInObj, IsPrimeI isPrimeInObj,
-			PrimeDetectrResultsI primeDetectrResultsInObj) {
+			ResultsI primeDetectrResultsInObj) {
 		MyLogger.writeMessage("WorkerThread()", DebugLevel.CONSTRUCTOR);
 		this.fileProcessorObj = fileProcessorInObj;
 		this.isPrimeObj = isPrimeInObj;
@@ -62,13 +64,14 @@ public class WorkerThread implements Runnable {
 						primeDetectrResultsObj.addPrimeNum(Integer.parseInt(line));
 					}
 				}
-				primeDetectrResultsObj.addTerminationMsg("STOP");
+
 			}
 
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.exit(1);
 		}
+		primeDetectrResultsObj.addTerminationMsg("STOP");
 	}
 
 	@Override

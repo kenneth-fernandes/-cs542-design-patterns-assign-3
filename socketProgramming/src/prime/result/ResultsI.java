@@ -3,9 +3,9 @@ package prime.result;
 import java.util.Vector;
 
 /**
- * PrimeDetectrResultsI interface
+ * ResultsI interface
  */
-public interface PrimeDetectrResultsI {
+public interface ResultsI {
 
     /**
      * A thread safe method for adding the prime number read from the file to the

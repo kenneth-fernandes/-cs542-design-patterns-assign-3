@@ -3,6 +3,7 @@ package prime.result;
 import java.util.Vector;
 
 import prime.socket.DataSender;
+import prime.socket.DataSenderI;
 import prime.util.InputParametersI;
 import prime.util.MyLogger;
 import prime.util.PrimeDetectorInput;
@@ -14,10 +15,10 @@ import prime.util.MyLogger.DebugLevel;
  * 
  * @author Akshay Anvekar and Kenneth Fernandes
  */
-public class PrimeDetectrResults implements PrimeDetectrResultsI {
+public class PrimeDetectrResults implements ResultsI {
 
 	// Stores the handler of PrimeDetectrResults object
-	private static PrimeDetectrResultsI resultsObj = new PrimeDetectrResults();
+	private static ResultsI resultsObj = new PrimeDetectrResults();
 
 	// Stores the prime numbers data
 	private Vector<Integer> primeNumsVector;
@@ -35,7 +36,7 @@ public class PrimeDetectrResults implements PrimeDetectrResultsI {
 
 	private boolean isDataSndrThrdCreated = false;
 
-	private DataSender dataSenderObj;
+	private DataSenderI dataSenderObj;
 
 	/**
 	 * PrimeDetectrResults constructor
@@ -51,10 +52,9 @@ public class PrimeDetectrResults implements PrimeDetectrResultsI {
 	/**
 	 * This functions returns the single instance of PrimeDetectrResults object
 	 * 
-	 * @return - The single instance of PrimeDetectrResults object of type
-	 *         PrimeDetectrResultsI
+	 * @return - The single instance of PrimeDetectrResults object of type ResultsI
 	 */
-	public static PrimeDetectrResultsI getInstance() {
+	public static ResultsI getInstance() {
 		return resultsObj;
 	}
 
@@ -145,14 +145,12 @@ public class PrimeDetectrResults implements PrimeDetectrResultsI {
 	 * This function initialized the DataSender thread and starts the same.
 	 */
 	public synchronized void initDataSndrThread() {
-		dataSenderObj = new DataSender(inputParamsObj.getPersistSvcIPAddr(), inputParamsObj.getPersistSvcPortNum(),
-				inputParamsObj.getResultDataCapacity());
-		dataSenderThread = new Thread(dataSenderObj);
+		dataSenderObj = DataSender.getInstance();
+		dataSenderThread = new Thread((Runnable) dataSenderObj);
 		if (!isDataSndrThrdCreated) {
 			try {
 				((Thread) dataSenderThread).start();
 				isDataSndrThrdCreated = true;
-				System.out.println(" PrimeDetectrResultsI getInstance - after thread start()");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

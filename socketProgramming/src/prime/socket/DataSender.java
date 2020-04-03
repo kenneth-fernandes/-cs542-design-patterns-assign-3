@@ -8,8 +8,10 @@ import java.net.UnknownHostException;
 import java.util.Enumeration;
 import java.util.Vector;
 
+import prime.util.InputParametersI;
 import prime.result.PrimeDetectrResults;
 import prime.util.MyLogger;
+import prime.util.PrimeDetectorInput;
 import prime.util.MyLogger.DebugLevel;
 
 /**
@@ -18,7 +20,7 @@ import prime.util.MyLogger.DebugLevel;
  * 
  * @author Akshay Anvekar and Kenneth Fernandes
  */
-public class DataSender implements Runnable {
+public class DataSender implements Runnable, DataSenderI {
 
     // Stores the Socket handler of the DataSender client
     private Socket socketObj;
@@ -33,11 +35,8 @@ public class DataSender implements Runnable {
     // Stores the port number
     private int portNum;
 
-    // Stores the capacity
-    private int capacity;
-
     // Stores the handler of DataSender client
-    // private static DataSenderI dataSenderObj = new DataSender();
+    private static DataSenderI dataSenderObj = new DataSender();
 
     // Stores the Enumeration object handler of type Integer
     private Enumeration<Integer> enumeratnObj;
@@ -46,14 +45,21 @@ public class DataSender implements Runnable {
     private Vector<Integer> primeNumsVector;
 
     // Stores the status of data sending
-    private boolean isFileProcessCompleted = false;
+    private boolean isFileProcessCompleted;
+
+    private InputParametersI inputParamObj = PrimeDetectorInput.getInstance();
 
     /**
      * DataSender Constructor
      */
-    public DataSender(InetAddress addrObj, int portNum, int capacity) {
+    private DataSender() {
         MyLogger.writeMessage("DataSender()", DebugLevel.CONSTRUCTOR);
-        initSocketConnectn(addrObj, portNum, capacity);
+
+        System.out.print("\nDataSender() constructor\n");
+
+        initSocketConnectn(inputParamObj.getPersistSvcIPAddr(), inputParamObj.getPersistSvcPortNum());
+
+        isFileProcessCompleted = false;
     }
 
     /**
@@ -63,10 +69,10 @@ public class DataSender implements Runnable {
      * @throws NumberFormatException
      * @throws UnknownHostException
      */
-    /*
-     * public static DataSenderI getInstance() throws NumberFormatException,
-     * UnknownHostException { return dataSenderObj; }
-     */
+
+    public static DataSenderI getInstance() {
+        return dataSenderObj;
+    }
 
     /**
      * This function intilializes the socket connection
@@ -74,7 +80,7 @@ public class DataSender implements Runnable {
      * @param addrObj - InetAddress object handler
      * @param portNum - Port number of type String
      */
-    private void initSocketConnectn(InetAddress addrObj, int portNum, int capacity) {
+    private void initSocketConnectn(InetAddress addrObj, int portNum) {
         try {
             socketObj = new Socket(addrObj, portNum);
             outDataStreamObj = new DataOutputStream(socketObj.getOutputStream());
@@ -100,17 +106,21 @@ public class DataSender implements Runnable {
         primeNumsVector = PrimeDetectrResults.getInstance().getResultVector();
         synchronized (primeNumsVector) {
             while (true) {
+
                 System.out.println("While true processDataTransfer()");
                 try {
 
                     while (primeNumsVector.size() == 0) {
                         try {
-                            System.out.print("\nData Sender - processDataTransfer() - wait().");
+                            System.out
+                                    .print("\nData Sender - processDataTransfer() - wait()." + isFileProcessCompleted);
+
                             primeNumsVector.wait();
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
                     }
+
                     primeNumsVector.notifyAll();
                     while (primeNumsVector.size() != 0) {
                         System.out.println(Thread.currentThread().getName() + " Thread - Element - "
@@ -120,8 +130,11 @@ public class DataSender implements Runnable {
                         outDataStreamObj.flush();
                     }
                     if (isFileProcessCompleted) {
+                        outDataStreamObj.writeUTF("STOP");
+                        outDataStreamObj.flush();
                         break;
                     }
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -143,6 +156,11 @@ public class DataSender implements Runnable {
         }
     }
 
+    /**
+     * This function sets the flag of file processing completion variable
+     * 
+     * @param flag - The flag to be set of type boolean
+     */
     public void setFileProcessFlag(boolean flag) {
         if (!isFileProcessCompleted)
             isFileProcessCompleted = flag;
