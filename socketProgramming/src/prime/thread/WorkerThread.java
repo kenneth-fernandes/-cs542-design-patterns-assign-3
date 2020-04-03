@@ -1,14 +1,11 @@
 package prime.thread;
 
 import java.io.IOException;
-import java.util.List;
 
-import prime.util.InputParametersI;
 import prime.calculation.IsPrimeI;
-import prime.result.PrimeDetectrResultsI;
-import prime.util.FileProcessor;
+import prime.result.ResultsI;
+import prime.util.FileProcessorI;
 import prime.util.MyLogger;
-import prime.util.PrimeDetectorInput;
 import prime.util.MyLogger.DebugLevel;
 
 /**
@@ -21,19 +18,24 @@ import prime.util.MyLogger.DebugLevel;
 public class WorkerThread implements Runnable {
 
 	// Stores the handler of File Procssor object
-	private FileProcessor fileProcessorObj;
+	private FileProcessorI fileProcessorObj;
 
 	// Stores the handler of IsPrime class
 	private IsPrimeI isPrimeObj;
 
 	// Stores the handler of PrimeDetectrResults class
-	private PrimeDetectrResultsI primeDetectrResultsObj;
+	private ResultsI primeDetectrResultsObj;
 
-	private InputParametersI inputParamObj = PrimeDetectorInput.getInstance();
-
-	public WorkerThread(FileProcessor fileProcessorInObj, IsPrimeI isPrimeInObj,
-			PrimeDetectrResultsI primeDetectrResultsInObj) {
-		MyLogger.writeMessage("WorkerThread()", DebugLevel.CONSTRUCTOR);
+	/**
+	 * WorkerThread constructor
+	 * 
+	 * @param fileProcessorInObj - FileProcessor Object
+	 * @param isPrimeInObj - IsPrime instance of type IsPrimeI
+	 * @param primeDetectrResultsInObj - PrimeDetectrResults instance of type ResultsI
+	 */
+	public WorkerThread(FileProcessorI fileProcessorInObj, IsPrimeI isPrimeInObj,
+			ResultsI primeDetectrResultsInObj) {
+		MyLogger.writeMessage("\nWorkerThread()", DebugLevel.CONSTRUCTOR);
 		this.fileProcessorObj = fileProcessorInObj;
 		this.isPrimeObj = isPrimeInObj;
 		this.primeDetectrResultsObj = primeDetectrResultsInObj;
@@ -47,7 +49,7 @@ public class WorkerThread implements Runnable {
 	 */
 	@Override
 	public void run() {
-		MyLogger.writeMessage("run()", DebugLevel.THREAD_RUN);
+		MyLogger.writeMessage("\nrun()", DebugLevel.THREAD_RUN);
 		try {
 			String line = null;
 			/*
@@ -64,13 +66,14 @@ public class WorkerThread implements Runnable {
 						primeDetectrResultsObj.addPrimeNum(Integer.parseInt(line));
 					}
 				}
-				primeDetectrResultsObj.addTerminationMsg("STOP");
+
 			}
 
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.exit(1);
 		}
+		primeDetectrResultsObj.addTerminationMsg("STOP");
 	}
 
 	@Override

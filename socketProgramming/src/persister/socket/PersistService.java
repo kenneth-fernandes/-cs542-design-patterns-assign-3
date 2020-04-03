@@ -8,8 +8,8 @@ import java.net.Socket;
 
 import persister.result.PersisterResults;
 import persister.result.PersisterResultsI;
-import persister.util.PersistToFile;
-import persister.util.PersistToFileI;
+import persister.util.PrimesDataFilePersister;
+import persister.util.FilePersisterI;
 import prime.util.MyLogger;
 import prime.util.MyLogger.DebugLevel;
 
@@ -19,7 +19,7 @@ import prime.util.MyLogger.DebugLevel;
  * 
  * @author Akshay Anvekar and Kenneth Fernandes
  */
-public class PersistService implements PersistServiceI {
+public class PersistService implements ServerI {
 
     // Stores the Persist Service socket
     private Socket socket;
@@ -39,33 +39,32 @@ public class PersistService implements PersistServiceI {
     // Stores the result data sent by DataSender
     private String resultDataStr;
 
-    // Stores the instance of PersistService of type PersistServiceI
-    private static PersistServiceI persistSvcObj = new PersistService();
+    // Stores the instance of PersistService of type ServerI
+    private static ServerI persistSvcObj = new PersistService();
 
     // Stores the instance of PersisterResults of type PersisterResultsI
     private PersisterResultsI persistrResultsObj;
 
     // Stores the instance of PersistToFile of type PersistToFileI
-    private PersistToFileI persistToFileObj;
+    private FilePersisterI persistToFileObj;
 
     /**
      * PersistService constructor
      */
     private PersistService() {
-        MyLogger.writeMessage("PersistService()", DebugLevel.CONSTRUCTOR);
+        MyLogger.writeMessage("\n\nPersistService()", DebugLevel.CONSTRUCTOR);
         resultDataStr = "";
         outputFilePath = "";
         persistrResultsObj = PersisterResults.getInstance();
-        persistToFileObj = PersistToFile.getInstance();
+        persistToFileObj = PrimesDataFilePersister.getInstance();
     }
 
     /**
-     * Yhis function returns the single instance of PersistService of type
-     * PersistServiceI
+     * Yhis function returns the single instance of PersistService of type ServerI
      * 
-     * @return - Instance of PersistService of type PersistServiceI
+     * @return - Instance of PersistService of type ServerI
      */
-    public static PersistServiceI getInstance() {
+    public static ServerI getInstance() {
         return persistSvcObj;
     }
 
@@ -79,10 +78,9 @@ public class PersistService implements PersistServiceI {
     public void initSocketConnection(int inputDataPortNum, String filePath) throws IOException {
 
         server = new ServerSocket(inputDataPortNum);
-        System.out.println("Persister Service Started....");
-        System.out.println("Waiting for PrimeDetector client to connect....");
+        System.out.println("\nPersister Service Started....");
+        System.out.println("\nWaiting for client to connect....");
         socket = server.accept();
-
         inputDataStrmObj = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
         outputFilePath = filePath;
 
@@ -93,22 +91,22 @@ public class PersistService implements PersistServiceI {
      */
     public void processDataRetrieval() {
         try {
-
-            while (!resultDataStr.equals("STOP")) {
+            while (true) {
                 if (inputDataStrmObj.available() > 0) {
                     resultDataStr = inputDataStrmObj.readUTF();
+                    if (resultDataStr.equals("STOP")) {
+                        break;
+                    } else {
+                        System.out.println("\nPersister Service: Data Received from Client : " + resultDataStr);
+                    }
                     persistrResultsObj.storeResultData(resultDataStr);
-                    System.out.println(resultDataStr);
                 }
             }
-
             persistToFileObj.openFile(outputFilePath);
             persistToFileObj.writeLine(persistrResultsObj.getStoredPersisterResult());
             persistToFileObj.closeFile();
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
     }

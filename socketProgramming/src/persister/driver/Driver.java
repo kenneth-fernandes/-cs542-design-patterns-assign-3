@@ -3,7 +3,7 @@ package persister.driver;
 import persister.util.PersistSvcInput;
 import persister.util.InputParametersI;
 import persister.socket.PersistService;
-import persister.socket.PersistServiceI;
+import persister.socket.ServerI;
 
 /**
  * @author Akshay Anvekar and Kenneth Fernandes
@@ -28,8 +28,7 @@ public class Driver {
 			/**
 			 * Intializing the Persister Service for persisting the data to the outputfile
 			 */
-			PersistServiceI persistSvcObj = PersistService.getInstance();
-
+			ServerI persistSvcObj = PersistService.getInstance();
 			persistSvcObj.initSocketConnection(inputParamsObj.getPersistSvcPortNum(),
 					inputParamsObj.getOutputFilePath());
 			persistSvcObj.processDataRetrieval();

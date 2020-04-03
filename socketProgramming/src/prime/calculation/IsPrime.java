@@ -17,7 +17,7 @@ public class IsPrime implements IsPrimeI {
      * IsPrime constructor
      */
     private IsPrime() {
-        MyLogger.writeMessage("IsPrime()", DebugLevel.CONSTRUCTOR);
+        MyLogger.writeMessage("\nIsPrime()", DebugLevel.CONSTRUCTOR);
     }
 
     /**

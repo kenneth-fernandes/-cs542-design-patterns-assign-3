@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import prime.calculation.IsPrimeI;
-import prime.result.PrimeDetectrResultsI;
-import prime.util.FileProcessor;
+import prime.result.ResultsI;
+import prime.util.FileProcessorI;
 
 /**
  * ThreadPool is a class for implementing the thread pool
@@ -38,8 +38,8 @@ public class ThreadPool {
 	 * @param The Results object "primeDetectrResultsObj" for storing the prime numbers
 	 * @param The IsPrime object "isPrimeObj" for checking if a number is prime
 	 */
-	public static void createThreads(int numOfThreads, FileProcessor fileProcessorObj,
-			PrimeDetectrResultsI primeDetectrResultsObj, IsPrimeI isPrimeObj) {
+	public static void createThreads(int numOfThreads, FileProcessorI fileProcessorObj,
+			ResultsI primeDetectrResultsObj, IsPrimeI isPrimeObj) {
 		threadCount = numOfThreads;
 		threadList = new ArrayList<Runnable>();
 

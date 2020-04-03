@@ -5,16 +5,15 @@ import java.io.IOException;
 
 import prime.thread.CreateWorkers;
 import prime.util.FileProcessor;
+import prime.util.FileProcessorI;
 import prime.util.InputParametersI;
 import prime.calculation.IsPrime;
 import prime.calculation.IsPrimeI;
 import prime.util.MyLogger;
 import prime.util.PrimeDetectorInput;
-import prime.result.PrimeDetectrResultsI;
+import prime.result.ResultsI;
 import prime.result.PrimeDetectrResults;
 import prime.util.MyLogger.DebugLevel;
-import prime.socket.DataSender;
-import prime.socket.DataSenderI;
 
 /**
  * @author Akshay Anvekar and Kenneth Fernandes
@@ -30,7 +29,7 @@ public class Driver {
 			 */
 			if (args.length != 6 || args[0].equals("${arg0}") || args[1].equals("${arg1}") || args[2].equals("${arg2}")
 					|| args[3].equals("${arg3}") || args[4].equals("${arg4}") || args[5].equals("${arg5}")) {
-				System.err.println("Error: Incorrect number of arguments. Program accepts 6 argumnets.");
+				System.err.println("\nError: Incorrect number of arguments. Program accepts 6 argumnets.");
 				System.exit(0);
 			} else {
 
@@ -45,14 +44,19 @@ public class Driver {
 			// To check if the number of threads is between 1 and 5
 			if (!(inputParamsObj.getNumOfThreads() >= 1 && inputParamsObj.getNumOfThreads() <= 5)) {
 				System.err.println(
-						"Error: Incorrect value of NUM_THREADS. The expected value of NUM_THREADS is between 1 and 5.");
+						"\nError: Incorrect value of NUM_THREADS. The expected value of NUM_THREADS is between 1 and 5.");
 				System.exit(0);
 			}
-
+			// To check if theport number is between less than 32768 or greater than 50000
+			if (!(inputParamsObj.getPersistSvcPortNum() < 32768 || inputParamsObj.getPersistSvcPortNum() > 50000)) {
+				System.err.println("\nError: Incorrect value of DEBUG_VALUE. The expected value of Port number is"
+						+ " less than 32768 or greater than 50000.");
+				System.exit(0);
+			}
 			// To check if the debug value is between 0 and 4
 			if (!(inputParamsObj.getDebugValue() >= 0 && inputParamsObj.getDebugValue() <= 4)) {
 				System.err.println(
-						"Error: Incorrect value of DEBUG_VALUE. The expected value of NUM_THREADS is 0 and 4.");
+						"\nError: Incorrect value of DEBUG_VALUE. The expected value of NUM_THREADS is 0 and 4.");
 				System.exit(0);
 			}
 			// Setting the debug value based on the input
@@ -60,9 +64,8 @@ public class Driver {
 			/**
 			 * Creating instances of FileProcessor, PrimeDetectrResults, IsPrime
 			 */
-			FileProcessor fileProcessorObj = new FileProcessor(inputParamsObj.getInputFilePath());
-			PrimeDetectrResultsI primeDetectrResultsObj = PrimeDetectrResults
-					.getInstance();
+			FileProcessorI fileProcessorObj = new FileProcessor(inputParamsObj.getInputFilePath());
+			ResultsI primeDetectrResultsObj = PrimeDetectrResults.getInstance();
 			IsPrimeI isPrimeObj = IsPrime.getInstance();
 
 			/**
@@ -73,22 +76,12 @@ public class Driver {
 			workers.startWorkers(inputParamsObj.getNumOfThreads());
 
 			/**
-			 * Sending the result data to the Persister Service Server using socket
-			 */
-			// InputParametersI inputParamsObj = PrimeDetectorInput.getInstance();
-			/*DataSender dataSenderClient = new DataSender(inputParamsObj.getPersistSvcIPAddr(),
-					inputParamsObj.getPersistSvcPortNum(), inputParamsObj.getResultDataCapacity());*/
-			// dataSenderClient.initSocketConnectn();
-			
-			// dataSenderClient.closeConnectn();
-
-			/**
 			 * Logging the messages to stdout
 			 */
 			MyLogger.writeMessage(primeDetectrResultsObj.toString(), DebugLevel.RESULTS);
 
 			MyLogger.writeMessage(
-					"The sum of all the prime numbers is: " + primeDetectrResultsObj.getSumOfPrimeNumbers(),
+					"\nThe sum of all the prime numbers is: " + primeDetectrResultsObj.getSumOfPrimeNumbers(),
 					DebugLevel.NO_OUTPUT);
 
 		} catch (NumberFormatException e) {

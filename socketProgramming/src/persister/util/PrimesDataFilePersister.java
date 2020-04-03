@@ -12,7 +12,7 @@ import prime.util.MyLogger.DebugLevel;
 /**
  * PersistToFile class contains methods to write the data to the output file
  */
-public class PersistToFile implements PersistToFileI {
+public class PrimesDataFilePersister implements FilePersisterI {
 
     // Stores the BufferedWriter instance
     private BufferedWriter buffrdWriter;
@@ -24,20 +24,20 @@ public class PersistToFile implements PersistToFileI {
     private FileWriter fileWriter;
 
     // Stores the PersistToFile instance of type PersistToFileI
-    private static PersistToFileI persistToFileObj = new PersistToFile();
+    private static FilePersisterI persistToFileObj = new PrimesDataFilePersister();
 
     /**
      * PersistToFile constructor
      */
-    private PersistToFile() {
-        MyLogger.writeMessage("PersistToFile()", DebugLevel.CONSTRUCTOR);
+    private PrimesDataFilePersister() {
+        MyLogger.writeMessage("\nPersistToFile()", DebugLevel.CONSTRUCTOR);
 
     }
 
     /**
      * This function returns the PersistToFile instance of type PersistToFileI
      */
-    public static PersistToFileI getInstance() {
+    public static FilePersisterI getInstance() {
         return persistToFileObj;
     }
 
