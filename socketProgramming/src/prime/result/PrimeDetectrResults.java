@@ -86,6 +86,7 @@ public class PrimeDetectrResults implements ResultsI {
 
 				primeNumsVector.add(primeNum);
 				primeNumsSum += primeNum;
+				primeResultStr = primeResultStr.concat(primeNum + " ");
 
 				primeNumsVector.notifyAll();
 				initDataSndrThread();
@@ -161,7 +162,7 @@ public class PrimeDetectrResults implements ResultsI {
 
 	@Override
 	public String toString() {
-		return "Results: " + primeNumsVector.toString();
+		return "\nResults: " + primeResultStr;
 	}
 
 }
