@@ -10,28 +10,18 @@ import socketProgramming.util.MyLogger.DebugLevel;
  */
 public class CreateWorkers
 {
-	private static CreateWorkers createWrkrsObj = new CreateWorkers(); 
 	private FileProcessor fp;
     private IsPrime isPrime;
     private Results results;
 	
-    private CreateWorkers() {
-		MyLogger.writeMessage("CreateWorkers()", DebugLevel.CONSTRUCTOR); 
-	} 
-  
-	/**
-	 * The function returns the single object of CreateWorkers class
-	 * @param fpIn - The FileProcessor class object
-	 * @param resultsIn - The Results class object
-	 * @param isPrimeIn - The IsPrime class object
-	 * @return - The CreateWorkers class object
-	 */
-	public static CreateWorkers getInstance(FileProcessor fpIn, Results resultsIn, IsPrime isPrimeIn) 
-    {
-		createWrkrsObj.fp = fpIn;
-        createWrkrsObj.isPrime = isPrimeIn;
-		createWrkrsObj.results = resultsIn;
-        return createWrkrsObj; 
+	
+	public CreateWorkers(FileProcessor fpIn, Results resultsIn, IsPrime isPrimeIn)
+	{
+		MyLogger.writeMessage("CreateWorkers()", DebugLevel.CONSTRUCTOR);
+        this.fp = fpIn;
+        this.isPrime = isPrimeIn;
+		this.results = resultsIn;
+		
 	}
 	
 	/**
@@ -86,4 +76,3 @@ public class CreateWorkers
 				+ ", isPrime=" + isPrime + ")";
 	}
 }
-
