@@ -3,7 +3,7 @@ package prime.result;
 import java.util.Vector;
 
 import prime.socket.DataSender;
-import prime.socket.DataSenderI;
+import prime.socket.ClientI;
 import prime.util.InputParametersI;
 import prime.util.MyLogger;
 import prime.util.PrimeDetectorInput;
@@ -36,7 +36,7 @@ public class PrimeDetectrResults implements ResultsI {
 
 	private boolean isDataSndrThrdCreated = false;
 
-	private DataSenderI dataSenderObj;
+	private ClientI dataSenderObj;
 
 	/**
 	 * PrimeDetectrResults constructor

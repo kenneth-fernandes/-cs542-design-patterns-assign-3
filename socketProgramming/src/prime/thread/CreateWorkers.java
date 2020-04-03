@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import prime.calculation.IsPrimeI;
 import prime.result.ResultsI;
-import prime.util.FileProcessor;
+import prime.util.FileProcessorI;
 import prime.util.MyLogger;
 import prime.util.MyLogger.DebugLevel;
 
@@ -19,7 +19,7 @@ public class CreateWorkers {
 	private static CreateWorkers createWrkrsObj = new CreateWorkers();
 
 	// Stores the handler of FileProcessor
-	private FileProcessor fileProcessorObj;
+	private FileProcessorI fileProcessorObj;
 
 	// Stores the handler of IsPrime instance
 	private IsPrimeI isPrimeObj;
@@ -34,15 +34,15 @@ public class CreateWorkers {
 	/**
 	 * The function returns the single object of CreateWorkers class
 	 * 
-	 * @param fpIn       - The FileProcessor class object
-	 * @param results2   - The Results class object
-	 * @param isPrimeObj - The IsPrime class object
+	 * @param fileProcessorObjIn       - The FileProcessor class object
+	 * @param resultsIn   - The Results class object
+	 * @param isPrimeObjIn - The IsPrime class object
 	 * @return - The CreateWorkers class object
 	 */
-	public static CreateWorkers getInstance(FileProcessor fpIn, ResultsI results2, IsPrimeI isPrimeObj) {
-		createWrkrsObj.fileProcessorObj = fpIn;
-		createWrkrsObj.isPrimeObj = isPrimeObj;
-		createWrkrsObj.primeDetectrResultsObj = results2;
+	public static CreateWorkers getInstance(FileProcessorI fileProcessorObjIn, ResultsI resultsIn, IsPrimeI isPrimeObjIn) {
+		createWrkrsObj.fileProcessorObj = fileProcessorObjIn;
+		createWrkrsObj.isPrimeObj = isPrimeObjIn;
+		createWrkrsObj.primeDetectrResultsObj = resultsIn;
 		return createWrkrsObj;
 	}
 

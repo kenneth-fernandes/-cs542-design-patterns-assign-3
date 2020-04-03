@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import prime.calculation.IsPrimeI;
 import prime.result.ResultsI;
-import prime.util.FileProcessor;
+import prime.util.FileProcessorI;
 import prime.util.MyLogger;
 import prime.util.MyLogger.DebugLevel;
 
@@ -18,7 +18,7 @@ import prime.util.MyLogger.DebugLevel;
 public class WorkerThread implements Runnable {
 
 	// Stores the handler of File Procssor object
-	private FileProcessor fileProcessorObj;
+	private FileProcessorI fileProcessorObj;
 
 	// Stores the handler of IsPrime class
 	private IsPrimeI isPrimeObj;
@@ -33,7 +33,7 @@ public class WorkerThread implements Runnable {
 	 * @param isPrimeInObj - IsPrime instance of type IsPrimeI
 	 * @param primeDetectrResultsInObj - PrimeDetectrResults instance of type ResultsI
 	 */
-	public WorkerThread(FileProcessor fileProcessorInObj, IsPrimeI isPrimeInObj,
+	public WorkerThread(FileProcessorI fileProcessorInObj, IsPrimeI isPrimeInObj,
 			ResultsI primeDetectrResultsInObj) {
 		MyLogger.writeMessage("WorkerThread()", DebugLevel.CONSTRUCTOR);
 		this.fileProcessorObj = fileProcessorInObj;

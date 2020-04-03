@@ -1,9 +1,9 @@
 package prime.socket;
 
 /**
- * DataSenderI interface
+ * ClientI interface
  */
-public interface DataSenderI {
+public interface ClientI {
 
    /**
    * This function processes sending the data to the Persister Service server

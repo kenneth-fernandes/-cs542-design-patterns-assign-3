@@ -20,7 +20,7 @@ import prime.util.MyLogger.DebugLevel;
  * 
  * @author Akshay Anvekar and Kenneth Fernandes
  */
-public class DataSender implements Runnable, DataSenderI {
+public class DataSender implements Runnable, ClientI {
 
     // Stores the Socket handler of the DataSender client
     private Socket socketObj;
@@ -36,7 +36,7 @@ public class DataSender implements Runnable, DataSenderI {
     private int portNum;
 
     // Stores the handler of DataSender client
-    private static DataSenderI dataSenderObj = new DataSender();
+    private static ClientI dataSenderObj = new DataSender();
 
     // Stores the Enumeration object handler of type Integer
     private Enumeration<Integer> enumeratnObj;
@@ -70,7 +70,7 @@ public class DataSender implements Runnable, DataSenderI {
      * @throws UnknownHostException
      */
 
-    public static DataSenderI getInstance() {
+    public static ClientI getInstance() {
         return dataSenderObj;
     }
 
@@ -103,6 +103,7 @@ public class DataSender implements Runnable, DataSenderI {
      * 
      */
     public void processDataTransfer() {
+
         primeNumsVector = PrimeDetectrResults.getInstance().getResultVector();
         synchronized (primeNumsVector) {
             while (true) {
@@ -112,8 +113,8 @@ public class DataSender implements Runnable, DataSenderI {
 
                     while (primeNumsVector.size() == 0) {
                         try {
-                            System.out
-                                    .print("\nData Sender - processDataTransfer() - wait()." + isFileProcessCompleted);
+                            System.out.println(
+                                    "\nData Sender - processDataTransfer() - wait()." + isFileProcessCompleted);
 
                             primeNumsVector.wait();
                         } catch (InterruptedException e) {

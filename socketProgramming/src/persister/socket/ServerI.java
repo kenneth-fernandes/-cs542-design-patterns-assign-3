@@ -3,9 +3,9 @@ package persister.socket;
 import java.io.IOException;
 
 /**
- * PersistServiceI
+ * ServerI
  */
-public interface PersistServiceI {
+public interface ServerI {
 
     /**
      * This functio intialized the PersistService Server Socket connection

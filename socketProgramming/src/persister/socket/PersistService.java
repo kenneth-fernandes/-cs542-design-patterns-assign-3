@@ -8,8 +8,8 @@ import java.net.Socket;
 
 import persister.result.PersisterResults;
 import persister.result.PersisterResultsI;
-import persister.util.PersistToFile;
-import persister.util.PersistToFileI;
+import persister.util.PrimesDataFilePersister;
+import persister.util.FilePersisterI;
 import prime.util.MyLogger;
 import prime.util.MyLogger.DebugLevel;
 
@@ -19,7 +19,7 @@ import prime.util.MyLogger.DebugLevel;
  * 
  * @author Akshay Anvekar and Kenneth Fernandes
  */
-public class PersistService implements PersistServiceI {
+public class PersistService implements ServerI {
 
     // Stores the Persist Service socket
     private Socket socket;
@@ -39,14 +39,14 @@ public class PersistService implements PersistServiceI {
     // Stores the result data sent by DataSender
     private String resultDataStr;
 
-    // Stores the instance of PersistService of type PersistServiceI
-    private static PersistServiceI persistSvcObj = new PersistService();
+    // Stores the instance of PersistService of type ServerI
+    private static ServerI persistSvcObj = new PersistService();
 
     // Stores the instance of PersisterResults of type PersisterResultsI
     private PersisterResultsI persistrResultsObj;
 
     // Stores the instance of PersistToFile of type PersistToFileI
-    private PersistToFileI persistToFileObj;
+    private FilePersisterI persistToFileObj;
 
     /**
      * PersistService constructor
@@ -56,16 +56,16 @@ public class PersistService implements PersistServiceI {
         resultDataStr = "";
         outputFilePath = "";
         persistrResultsObj = PersisterResults.getInstance();
-        persistToFileObj = PersistToFile.getInstance();
+        persistToFileObj = PrimesDataFilePersister.getInstance();
     }
 
     /**
      * Yhis function returns the single instance of PersistService of type
-     * PersistServiceI
+     * ServerI
      * 
-     * @return - Instance of PersistService of type PersistServiceI
+     * @return - Instance of PersistService of type ServerI
      */
-    public static PersistServiceI getInstance() {
+    public static ServerI getInstance() {
         return persistSvcObj;
     }
 

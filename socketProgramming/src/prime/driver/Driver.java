@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import prime.thread.CreateWorkers;
 import prime.util.FileProcessor;
+import prime.util.FileProcessorI;
 import prime.util.InputParametersI;
 import prime.calculation.IsPrime;
 import prime.calculation.IsPrimeI;
@@ -58,7 +59,7 @@ public class Driver {
 			/**
 			 * Creating instances of FileProcessor, PrimeDetectrResults, IsPrime
 			 */
-			FileProcessor fileProcessorObj = new FileProcessor(inputParamsObj.getInputFilePath());
+			FileProcessorI fileProcessorObj = new FileProcessor(inputParamsObj.getInputFilePath());
 			ResultsI primeDetectrResultsObj = PrimeDetectrResults
 					.getInstance();
 			IsPrimeI isPrimeObj = IsPrime.getInstance();

@@ -3,7 +3,7 @@ package persister.util;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public interface PersistToFileI {
+public interface FilePersisterI {
     /**
      * This function open the file and intializes BufferedWriter
      * 
