@@ -98,7 +98,7 @@ public class PersistService implements PersistServiceI {
                 if (inputDataStrmObj.available() > 0) {
                     resultDataStr = inputDataStrmObj.readUTF();
                     persistrResultsObj.storeResultData(resultDataStr);
-                    System.out.print(persistrResultsObj.getStoredPersisterResult());
+                    System.out.println(resultDataStr);
                 }
             }
 

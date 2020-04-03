@@ -47,7 +47,7 @@ public class FileProcessor
 	 * This is a function is for closing the file
 	 * @throws IOException
 	 */
-	public void closeFile() throws IOException
+	public synchronized void closeFile() throws IOException
 	{
 		try
 		{

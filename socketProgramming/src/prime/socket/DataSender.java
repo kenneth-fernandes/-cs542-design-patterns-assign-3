@@ -74,7 +74,7 @@ public class DataSender implements Runnable {
      * @param addrObj - InetAddress object handler
      * @param portNum - Port number of type String
      */
-    private synchronized void initSocketConnectn(InetAddress addrObj, int portNum, int capacity) {
+    private void initSocketConnectn(InetAddress addrObj, int portNum, int capacity) {
         try {
             socketObj = new Socket(addrObj, portNum);
             outDataStreamObj = new DataOutputStream(socketObj.getOutputStream());
@@ -89,36 +89,45 @@ public class DataSender implements Runnable {
     @Override
     public void run() {
         processDataTransfer();
-        if (isFileProcessCompleted) {
-            closeConnectn();
-        }
+        closeConnectn();
     }
 
     /**
      * This function processes sending the data to the Persister Service server
      * 
      */
-    public synchronized void processDataTransfer() {
+    public void processDataTransfer() {
         primeNumsVector = PrimeDetectrResults.getInstance().getResultVector();
-        System.out.println("processDataTransfer() - DataSender. - Notify()");
+        synchronized (primeNumsVector) {
+            while (true) {
+                System.out.println("While true processDataTransfer()");
+                try {
 
-        while (primeNumsVector.size() == 0) {
-            try {
-                System.out.println("processDataTransfer() - DataSender. - wait()");
-                wait();
-            } catch (Exception e) {
-                e.printStackTrace();
+                    while (primeNumsVector.size() == 0) {
+                        try {
+                            System.out.print("\nData Sender - processDataTransfer() - wait().");
+                            primeNumsVector.wait();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    primeNumsVector.notifyAll();
+                    while (primeNumsVector.size() != 0) {
+                        System.out.println(Thread.currentThread().getName() + " Thread - Element - "
+                                + primeNumsVector.get(0).toString());
+                        String s = primeNumsVector.remove(0).toString();
+                        outDataStreamObj.writeUTF(s);
+                        outDataStreamObj.flush();
+                    }
+                    if (isFileProcessCompleted) {
+                        break;
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
-        notifyAll();
-        try {
-            while (primeNumsVector.size() != 0) {
-                outDataStreamObj.writeUTF(primeNumsVector.remove(0).toString());
-            }
-            outDataStreamObj.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
     }
 
     /**
@@ -134,8 +143,9 @@ public class DataSender implements Runnable {
         }
     }
 
-    public synchronized void setFileProcessFlag(boolean flag) {
-        isFileProcessCompleted = flag;
+    public void setFileProcessFlag(boolean flag) {
+        if (!isFileProcessCompleted)
+            isFileProcessCompleted = flag;
     }
 
     @Override

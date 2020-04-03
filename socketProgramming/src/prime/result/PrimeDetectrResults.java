@@ -29,7 +29,7 @@ public class PrimeDetectrResults implements PrimeDetectrResultsI {
 	private int primeNumsSum;
 
 	// Stores the flag if file read is complete
-	private String stopMsg = "";
+	private String stopMsg;
 
 	private static Thread dataSenderThread;
 
@@ -43,6 +43,7 @@ public class PrimeDetectrResults implements PrimeDetectrResultsI {
 	private PrimeDetectrResults() {
 
 		MyLogger.writeMessage("PrimeDetectrResults()", DebugLevel.CONSTRUCTOR);
+		stopMsg = "";
 		primeNumsVector = new Vector<>();
 
 	}
@@ -63,18 +64,33 @@ public class PrimeDetectrResults implements PrimeDetectrResultsI {
 	 * 
 	 * @param primeNo - The prime number to be added to the list
 	 */
-	public synchronized void addPrimeNum(int primeNum) {
+	public void addPrimeNum(int primeNum) {
 		MyLogger.writeMessage("addPrimeNum()", DebugLevel.RESULTS_ADDED);
+		synchronized (primeNumsVector) {
+			while (primeNumsVector.size() == inputParamsObj.getResultDataCapacity()) {
+				try {
+					System.out.print("\nData PrimeDetctResult - addPrimeNum() - wait().");
+					primeNumsVector.wait();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
 
-		if (primeNumsVector.size() < inputParamsObj.getResultDataCapacity()) {
-			primeNumsVector.add(primeNum);
-			primeNumsSum += primeNum;
-			initDataSndrThread();
+			if (primeNumsVector.size() < inputParamsObj.getResultDataCapacity()) {
+
+				primeNumsVector.add(primeNum);
+				primeNumsSum += primeNum;
+
+				primeNumsVector.notifyAll();
+				initDataSndrThread();
+				if (stopMsg.equals("STOP")) {
+					System.out.println("Setting flag  of FileProcess : " + true);
+
+				}
+			}
+
 		}
 
-		if (stopMsg.equals("STOP")) {
-			dataSenderObj.setFileProcessFlag(true);
-		}
 	}
 
 	/**
@@ -83,7 +99,7 @@ public class PrimeDetectrResults implements PrimeDetectrResultsI {
 	 * @return - The data-structure for storing prime numbers of type
 	 *         Vector<Integer>
 	 */
-	public synchronized Vector<Integer> getResultVector() {
+	public Vector<Integer> getResultVector() {
 		return primeNumsVector;
 	}
 
@@ -92,7 +108,7 @@ public class PrimeDetectrResults implements PrimeDetectrResultsI {
 	 * 
 	 * @return - The summation of prime numbers
 	 */
-	public synchronized int getSumOfPrimeNumbers() {
+	public int getSumOfPrimeNumbers() {
 
 		return primeNumsSum;
 	}
@@ -100,8 +116,9 @@ public class PrimeDetectrResults implements PrimeDetectrResultsI {
 	/**
 	 * This function that sets a termination flag to "true"
 	 */
-	public synchronized void addTerminationMsg(String message) {
+	public void addTerminationMsg(String message) {
 		stopMsg = message;
+		dataSenderObj.setFileProcessFlag(true);
 
 	}
 
@@ -110,7 +127,7 @@ public class PrimeDetectrResults implements PrimeDetectrResultsI {
 	 * 
 	 * @return - the size of the result vector for storing prime numbers of type int
 	 */
-	public synchronized int getResultVectorSize() {
+	public int getResultVectorSize() {
 		return primeNumsVector.size();
 	}
 
@@ -120,7 +137,7 @@ public class PrimeDetectrResults implements PrimeDetectrResultsI {
 	 * @param message - The message used for termination
 	 * @return - True/False if message is set
 	 */
-	public synchronized boolean isTerminationMsgSet(String message) {
+	public boolean isTerminationMsgSet(String message) {
 		return stopMsg.equals(message);
 	}
 

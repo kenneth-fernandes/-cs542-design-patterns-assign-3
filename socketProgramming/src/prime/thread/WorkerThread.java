@@ -52,32 +52,19 @@ public class WorkerThread implements Runnable {
 			/*
 			 * This reads the file line by line until the end of the file is reached
 			 */
-			while ((line = fileProcessorObj.readLine()) != null) {
+			synchronized (this) {
+				while ((line = fileProcessorObj.readLine()) != null) {
+					// Check if the number is prime
+					boolean prime = false;
 
-				// Check if the number is prime
-				boolean prime = false;
-
-				prime = isPrimeObj.checkNum(Integer.parseInt(line));
-
-				if (prime) {
-					synchronized (primeDetectrResultsObj) {
-						while (primeDetectrResultsObj.getResultVectorSize() == inputParamObj.getResultDataCapacity()) {
-
-							try {
-								System.out.println("run() - Worker thread. - wait() - Size: "
-										+ primeDetectrResultsObj.getResultVectorSize());
-								wait();
-							} catch (Exception e) {
-								e.printStackTrace();
-							}
-						}
-						notifyAll();
+					prime = isPrimeObj.checkNum(Integer.parseInt(line));
+					if (prime) {
 						primeDetectrResultsObj.addPrimeNum(Integer.parseInt(line));
 					}
-
 				}
+				primeDetectrResultsObj.addTerminationMsg("STOP");
 			}
-			primeDetectrResultsObj.addTerminationMsg("STOP");
+
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.exit(1);
