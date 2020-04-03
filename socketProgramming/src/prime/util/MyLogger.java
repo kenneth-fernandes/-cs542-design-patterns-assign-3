@@ -1,7 +1,8 @@
-package socketProgramming.util;
+package prime.util;
 
 /**
  * The class MyLogger is for implementing the logger
+ * 
  * @author Akshay Anvekar and Kenneth Fernandes
  */
 public class MyLogger
@@ -95,6 +96,7 @@ public class MyLogger
 			e.printStackTrace();
 	}
 	
+	@Override
 	public String toString()
 	{
 		return "The debug value set is " + debugValue;
