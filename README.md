@@ -1,4 +1,4 @@
-# CSX42: Assignment 3
+# CS542 - Design Patterns: Assignment 3
 ## Name: Akshay Kumar Anvekar and Kenneth Fernandes
 
 
